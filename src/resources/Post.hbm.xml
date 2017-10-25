@@ -6,11 +6,13 @@
         <id name="postId">
             <generator class="uuid"/>
         </id>
-        <property name="department"/>
+        <property name="postName"/>
 
         <many-to-one name="department"
+                     class="com.lanou.domain.Department"
+                     lazy="false"
                      column="depId"
-
+                     cascade="all"/>
 
     </class>
 </hibernate-mapping>

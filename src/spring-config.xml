@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!--配置Spring注解扫描根目录-->
     <context:component-scan base-package="com.lanou"/>
@@ -14,7 +22,7 @@
     <bean class="org.apache.commons.dbcp.BasicDataSource"
           id="dataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/ssh_1"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/crm"/>
         <property name="username" value="root"/>
         <property name="password" value="123456"/>
     </bean>
@@ -67,6 +75,38 @@
         <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
     </aop:config>
 
+    <!--dao层-->
+    <bean class="com.lanou.dao.impl.DepartmentDaoImpl"
+          id="departmentDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean class="com.lanou.dao.impl.StaffDaoImpl"
+          id="staffDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean class="com.lanou.dao.impl.PostDaoImpl"
+          id="postDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+
+    <!--service层-->
+    <bean class="com.lanou.service.impl.DepartmentServiceImpl"
+          id="departmentService">
+        <property name="baseDao" ref="departmentDao"/>
+    </bean>
+
+    <bean class="com.lanou.service.impl.StaffServiceImpl"
+          id="staffService">
+        <property name="baseDao" ref="staffDao"/>
+    </bean>
+
+    <bean class="com.lanou.service.impl.PostServiceImpl"
+          id="postService">
+        <property name="baseDao" ref="postDao"/>
+    </bean>
 
 
 

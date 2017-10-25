@@ -1,5 +1,7 @@
 package com.lanou.domain;
 
+import java.util.List;
+
 /**
  * Created by dllo on 17/10/24.
  */
@@ -7,19 +9,19 @@ public class Post {
     private String postId;
     private String postName;
     private Department department;
+    private List<Staff> staffs;
 
     public Post() {
     }
+
 
     public Post(String postId, String postName) {
         this.postId = postId;
         this.postName = postName;
     }
 
-    public Post(String postId, String postName, Department department) {
-        this.postId = postId;
+    public Post(String postName) {
         this.postName = postName;
-        this.department = department;
     }
 
     @Override
@@ -53,5 +55,13 @@ public class Post {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public List<Staff> getStaffs() {
+        return staffs;
+    }
+
+    public void setStaffs(List<Staff> staffs) {
+        this.staffs = staffs;
     }
 }

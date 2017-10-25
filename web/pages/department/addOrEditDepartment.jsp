@@ -23,7 +23,7 @@
    
     <td width="52%"align="right">
     	<!-- 提交表单 -->
-       <a href="javascript:void(0)" onclick="document.forms[0].submit()">
+       <a href="${pageContext.request.contextPath}/add.action" onclick="document.forms[0].submit()">
        	<img src="${pageContext.request.contextPath}/images/button/save.gif" />
        </a>
        <!-- 执行js，进行返回 -->

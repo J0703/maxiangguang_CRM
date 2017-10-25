@@ -12,7 +12,49 @@
     <constant name="struts.objectFactory" value="spring"/>
 
 
-    <package name="ssh" extends="json-default">
+    <package name="staff" extends="json-default">
+
+        <!--登录-->
+        <action name="login"
+                class="com.lanou.action.StaffAction"
+                method="login">
+            <result name="success">/pages/frame.jsp</result>
+            <result name="error">/pages/login.jsp</result>
+            <result name="input">/pages/login.jsp</result>
+        </action>
+
+        <!--修改密码-->
+        <action name="editLoginPwd"
+                class="com.lanou.action.StaffAction"
+                method="editLoginPwd">
+            <result name="success">/pages/login.jsp</result>
+            <result name="error">/pages/staff/updPwd.jsp</result>
+            <result name="input">/pages/error.jsp</result>
+        </action>
+
+        <!--退出登录-->
+        <action name="logout"
+                class="com.lanou.action.StaffAction"
+                method="logout">
+            <result name="success">/pages/login.jsp</result>
+        </action>
+
+    </package>
+
+    <package name="department" extends="json-default">
+        <!--查询所有部门-->
+        <action name="findAll"
+                class="com.lanou.action.DepartmentAction"
+                method="findAll">
+            <result name="success">/pages/department/listDepartment.jsp</result>
+        </action>
+
+        <!--添加部门-->
+        <action name="add"
+                class="com.lanou.action.DepartmentAction"
+                method="add">
+            <result name="success" type="chain">findAll</result>
+        </action>
 
 
 

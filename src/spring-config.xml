@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--配置Spring注解扫描根目录-->
+    <context:component-scan base-package="com.lanou"/>
+
+
+    <!--配置Hibernate-->
+    <!--1. 配置数据库连接池-->
+    <bean class="org.apache.commons.dbcp.BasicDataSource"
+          id="dataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/ssh_1"/>
+        <property name="username" value="root"/>
+        <property name="password" value="123456"/>
+    </bean>
+
+    <!--2. 配置sessionFactory-->
+    <bean class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
+          id="sessionFactory">
+        <!--引入dbcp数据库连接池-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--配置hibernate属性, 原hibernate中的可选项-->
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+
+                <!--如果sessionFactory交给spring管理, 同时还引入了Spring中的事务切面,则将下面这句话注释掉-->
+                <!--<prop key="hibernate.current_session_context_class">thread</prop>-->
+            </props>
+        </property>
+
+        <!--加载实体类的hibernate映射文件, 自动匹配 resource 目录下的所有.hbm.xml后缀的文件-->
+        <property name="mappingLocations" value="classpath:resources/*.hbm.xml"/>
+    </bean>
+
+    <!--3. 配置事务对象(切面)-->
+    <bean class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+          id="transactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!--4. 配置事务属性-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="add*"/>
+            <tx:method name="delete*"/>
+            <tx:method name="update*"/>
+            <tx:method name="find*"/>
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!--5. 配置spring aop-->
+    <aop:config>
+        <!--配置切入点(通常指向业务层)-->
+        <aop:pointcut id="pointcut"
+                      expression="execution(* com.lanou.service.*.*(..))"/>
+        <!--配置通知-->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
+    </aop:config>
+
+
+
+
+
+</beans>

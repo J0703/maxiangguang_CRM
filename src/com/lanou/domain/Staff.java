@@ -15,6 +15,7 @@ public class Staff {
     private String gender;//性别
     private Timestamp onDutyDate;//入职时间
     private Post post;//职务
+    private Department department;
 
     public Staff() {
     }
@@ -45,6 +46,17 @@ public class Staff {
         this.post = post;
     }
 
+    public Staff(String staffId, String loginName, String loginPwd, String staffName, String gender, Timestamp onDutyDate, Post post, Department department) {
+        this.staffId = staffId;
+        this.loginName = loginName;
+        this.loginPwd = loginPwd;
+        this.staffName = staffName;
+        this.gender = gender;
+        this.onDutyDate = onDutyDate;
+        this.post = post;
+        this.department = department;
+    }
+
     @Override
     public String toString() {
         return "Staff{" +
@@ -55,6 +67,7 @@ public class Staff {
                 ", gender='" + gender + '\'' +
                 ", onDutyDate=" + onDutyDate +
                 ", post=" + post +
+                ", department=" + department +
                 '}';
     }
 
@@ -112,5 +125,13 @@ public class Staff {
 
     public void setPost(Post post) {
         this.post = post;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }

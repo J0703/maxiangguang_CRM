@@ -3,6 +3,8 @@ package com.lanou.test;
 import com.lanou.domain.Department;
 import com.lanou.domain.Post;
 import com.lanou.domain.Staff;
+import com.lanou.service.DepartmentService;
+import com.lanou.service.PostService;
 import com.lanou.service.StaffService;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,29 +21,31 @@ public class MainTest {
 
     private ApplicationContext context;
     private StaffService staffService;
+    private PostService postService;
+    private DepartmentService departmentService;
 
     @Before
     public void init(){
         context = new ClassPathXmlApplicationContext("spring-config.xml");
         staffService = (StaffService) context.getBean("staffService");
+        postService = (PostService) context.getBean("postService");
+        departmentService = (DepartmentService) context.getBean("departmentService");
     }
+
+
 
     @Test
-    public void save(){
+    public void addPost(){
 
-        Department department = new Department("人力资源部");
         Post post = new Post("部长");
-        Staff staff = new Staff("mxg", "123", "马祥光", "男");
 
-        department.getPosts().add(post);
-        post.setDepartment(department);
-        post.getStaffs().add(staff);
-        staff.setPost(post);
-
-        staffService.save(staff);
-
+        List<Department> all = departmentService.findAll("from Department");
+        for (Department department : all) {
+            System.out.println(department);
+        }
 
     }
+
 
 
 }

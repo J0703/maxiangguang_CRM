@@ -6,6 +6,7 @@
 <title>无标题文档</title>
 <link href="${pageContext.request.contextPath}/css/sys.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/Calendar.js"></script>
+	<script src="../../jquery-3.2.1.js"></script>
 
 </head>
 
@@ -34,7 +35,7 @@
   </tr>
 </table>
 
-<form action="${pageContext.request.contextPath}/pages/staff/listStaff.jsp" method="post">
+<form action="${pageContext.request.contextPath}/staff/add.action" method="post">
 	<table width="88%" border="0" class="emp_table" style="width:80%;">
 	 <tr>
 	    <td>登录名：</td>
@@ -46,14 +47,14 @@
 	    <td>姓名：</td>
 	    <td><input type="text" name="staffName" value="" id="staffAction_add_staffName"/> </td>
 	    <td>性别：</td>
-	    <td><input type="radio" name="gender"  value="男"/>男
+	    <td><input type="radio" name="gender"  value="男" checked/>男
 	    	<input type="radio" name="gender"  value="女"/>女
 		</td>
 	  </tr>
 	 <tr>
 	    <td width="10%">所属部门：</td>
 	    <td width="20%">
-	    	<select name="crmPost.crmDepartment.depId"onchange="changePost(this)">
+	    	<select name="depId" id="department" onchange="changePost(this)" >
 			    <option value="">----请--选--择----</option>
 			    <option value="ee050687bd1a4455a153d7bbb7000001">教学部</option>
 			    <option value="ee050687bd1a4455a153d7bbb7000002">咨询部</option>
@@ -62,7 +63,7 @@
 	    </td>
 	    <td width="8%">职务：</td>
 	    <td width="62%">
-	    	<select id="postSelectId" name="crmPost.postId">
+	    	<select id="post" name="postId">
 	    		<option>----请--选--择----</option>
 	    	</select>
 	    </td>
@@ -77,5 +78,37 @@
 	  </tr>
 	</table>
 </form>
+
+<script>
+	$(function () {
+		$.post("${pageContext.request.contextPath}/post/showDepart.action",
+				null,
+				function (data) {
+					var _html = "<option>----请--选--择----</option>";
+					$.each(data, function (index, per) {
+						_html += '<option value="' + per.depId + '">' + per.depName + '</option>';
+					});
+					$("#department").html(_html);
+				}, "json"
+		);
+
+		$("#department").change(function () {
+					$.post("${pageContext.request.contextPath}/post/showPost.action",
+							{
+								departId: $("#department").val()
+							},
+							function (data) {
+								var _html = "<option>----请--选--择----</option>";
+								$.each(data, function (index, per) {
+									_html += "<option value='" + per.postId + "'>" + per.postName + "</option>";
+								});
+								$("#post").html(_html);
+							}, "json"
+					)
+				}
+		)
+
+	})
+</script>
 </body>
 </html>

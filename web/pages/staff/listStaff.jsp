@@ -1,3 +1,4 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -43,8 +44,6 @@
 	    	
 	    	<select name="crmPost.crmDepartment.depId" onchange="changePost(this)">
 			    <option value="">--请选择部门--</option>
-			    <option value="ee050687bd1a4455a153d7bbb7000001">教学部</option>
-			    <option value="ee050687bd1a4455a153d7bbb7000002">咨询部</option>
 			</select>
 
 	    </td>
@@ -53,9 +52,6 @@
 	    	
 	    	<select name="crmPost.postId" id="postSelectId">
 			    <option value="">--请选择职务--</option>
-			    <option value="ee050687bd1a4455a153d7bbb7000003">总监</option>
-			    <option value="ee050687bd1a4455a153d7bbb7000004">讲师</option>
-			    <option value="ee050687bd1a4455a153d7bbb7000005">主管</option>
 			</select>
 
 	    </td>
@@ -82,32 +78,24 @@
     <td width="10%" align="center">职务</td>
     <td width="10%" align="center">编辑</td>
   </tr>
-  
-    
-	  <tr class="tabtd1"> 
-	    <td align="center">管理员</td>
-	    <td align="center"></td>
-	    <td align="center"></td>
-	    <td align="center"></td>
-	    <td align="center"></td>
-	  	<td width="7%" align="center">
-	  		
-	  		<a href="${pageContext.request.contextPath}/pages/staff/editStaff.jsp"><img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img" /></a>	
-	  	</td>
-	  	
-	  </tr>
-    
-	  <tr class="tabtd2"> 
-	    <td align="center">赵六</td>
-	    <td align="center">男</td>
-	    <td align="center">2012-02-12</td>
-	    <td align="center">咨询部</td>
-	    <td align="center">主管</td>
-	  	<td width="7%" align="center">
-	  		
-	  		<a href="${pageContext.request.contextPath}/pages/staff/editStaff.jsp"><img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img" /></a>	
-	  	</td>
-	  </tr>
+
+	<s:iterator var="s" value="staffs">
+	<tr class="tabtd1">
+		<td align="center">${s.staffName}</td>
+		<td align="center">${s.gender}</td>
+		<td align="center">${s.onDutyDate}</td>
+		<td align="center">${s.department.depName}</td>
+		<td align="center">${s.post.postName}</td>
+		<td width="7%" align="center">
+
+			<a href="${pageContext.request.contextPath}/staff/edit.action?&staffId=${s.staffId}"><img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img" /></a>
+			<%--<a href="${pageContext.request.contextPath}/pages/staff/editStaff.jsp?--%>
+			<%--loginName=${s.loginName}&loginPwd=${s.loginPwd}&staffName=${s.staffName}&--%>
+			<%--gender=${s.gender}&onDutyDate=${s.onDutyDate}&depId=${s.post.department.depId}&--%>
+			<%--postId=${s.post.postId}&postName=${s.post.postName}&depName=${s.post.department.depName}"><img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img" /></a>--%>
+		</td>
+	</s:iterator>
+
 </table>
 
 

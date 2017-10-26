@@ -40,7 +40,7 @@ FONT-SIZE: 12px; COLOR: #4b4b4b; LINE-HEIGHT: 18px; TEXT-DECORATION: none
 		<tr align="center" >
 		 
 			<td class="login_msg" width="400">
-				<form action="${pageContext.request.contextPath}/login.action" method="post">
+				<form action="${pageContext.request.contextPath}/pages/frame.jsp" method="post">
 					
 					<font size="6" color="#ffffff">
 						欢迎使用CRM系统
@@ -61,12 +61,12 @@ FONT-SIZE: 12px; COLOR: #4b4b4b; LINE-HEIGHT: 18px; TEXT-DECORATION: none
 		</tr>
 	</table>
 	
-	<script type="text/javascript">
-		/* s标签中直接编写JavaScript代码时，不支持el表达式，只能提供单独的函数
-		function registerUrl(){
-			document.location='${pageContext.request.contextPath}/uiAction_staff_register';
-		}
-		*/
-	</script>
+	<%--<script type="text/javascript">--%>
+		<%--/* s标签中直接编写JavaScript代码时，不支持el表达式，只能提供单独的函数--%>
+		<%--function registerUrl(){--%>
+			<%--document.location='${pageContext.request.contextPath}/uiAction_staff_register';--%>
+		<%--}--%>
+		<%--*/--%>
+	<%--</script>--%>
 </div>
 </BODY></HTML>

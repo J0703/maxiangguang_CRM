@@ -12,8 +12,7 @@
     <constant name="struts.objectFactory" value="spring"/>
 
 
-    <package name="staff" extends="json-default">
-
+    <package name="staff" extends="json-default" namespace="/staff">
         <!--登录-->
         <action name="login"
                 class="com.lanou.action.StaffAction"
@@ -39,9 +38,30 @@
             <result name="success">/pages/login.jsp</result>
         </action>
 
+        <action name="findAll"
+                class="com.lanou.action.StaffAction"
+                method="findAll">
+            <result name="success">/pages/staff/listStaff.jsp</result>
+        </action>
+
+        <!--添加员工-->
+        <action name="add"
+                class="com.lanou.action.StaffAction"
+                method="add">
+            <result name="success" type="chain">findAll</result>
+            <result name="input">/pages/error.jsp</result>
+        </action>
+
+        <!--编辑前的准备-->
+        <action name="prepareEdit"
+                class="staffAction"
+                method="prepareEdit">
+            <result name="success">/pages/staff/editStaff.jsp</result>
+        </action>
+
     </package>
 
-    <package name="department" extends="json-default">
+    <package name="department" extends="json-default" namespace="/department">
         <!--查询所有部门-->
         <action name="findAll"
                 class="com.lanou.action.DepartmentAction"
@@ -55,9 +75,43 @@
                 method="add">
             <result name="success" type="chain">findAll</result>
         </action>
+    </package>
 
+    <package name="post" extends="json-default" namespace="/post">
 
+        <!--查询所有职务-->
+        <action name="findAll"
+                class="com.lanou.action.PostAction"
+                method="findAll">
+            <result name="success">/pages/post/listPost.jsp</result>
+        </action>
 
+        <!--添加职务-->
+        <action name="add"
+                class="com.lanou.action.PostAction"
+                method="add">
+            <result name="success" type="chain">findAll</result>
+            <result name="input">/pages/error.jsp</result>
+            <result name="error">/pages/error.jsp</result>
+        </action>
+
+        <!--显示部门-->
+        <action name="showDepart"
+                class="com.lanou.action.PostAction"
+                method="showDepart">
+            <result name="success" type="json">
+                <param name="root">departmentList</param>
+            </result>
+        </action>
+
+        <!--显示职务-->
+        <action name="showPost"
+                class="com.lanou.action.PostAction"
+                method="showPost">
+            <result name="success" type="json">
+                <param name="root">postList</param>
+            </result>
+        </action>
     </package>
 
 </struts>

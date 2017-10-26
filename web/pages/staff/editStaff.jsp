@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -6,6 +7,7 @@
 <title>无标题文档</title>
 <link href="${pageContext.request.contextPath}/css/sys.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/Calendar.js"></script>
+	<script src="../../jquery-3.2.1.js"></script>
 </head>
 
 <body class="emp_body">
@@ -40,42 +42,38 @@
 	<table width="88%" border="0" class="emp_table" style="width:80%;">
 	 <tr>
 	    <td>登录名：</td>
-	    <td><input type="text" name="loginName" value="赵六" /> </td>
+	    <td><input type="text" name="loginName" value="${staff.loginName}" /> </td>
 	    <td>密码：</td>
-	    <td><input type="password" name="loginPwd" value="54dfc11c8e9c49bab6068f473f913be9" /> </td>
+	    <td><input type="password" name="loginPwd" value="${param.loginPwd}" /> </td>
 	  </tr>
 	 <tr>
 	    <td>姓名：</td>
-	    <td><input type="text" name="staffName" value="赵六" /> </td>
+	    <td><input type="text" name="staffName" value="${param.staffName}" /> </td>
 	    <td>性别：</td>
-	    <td>
-	    	<input type="radio" name="gender" checked="checked" value="男"/>男
-	    	<input type="radio" name="gender" value="女"/>女
+		 <td>
+	    	<input type="radio" name="gender" value="男" <c:if test="${param.gender eq '男'}">checked</c:if>/>男
+	    	<input type="radio" name="gender" value="女" <c:if test="${param.gender eq '女'}">checked</c:if>/>女
 	    </td>
 	  </tr>
 	 <tr>
 	    <td width="10%">所属部门：</td>
 	    <td width="20%">
-	    	<select name="crmPost.crmDepartment.depId"  onchange="changePost(this)">
-			    <option value="">----请--选--择----</option>
-			    <option value="ee050687bd1a4455a153d7bbb7000001" selected="selected">教学部</option>
-			    <option value="ee050687bd1a4455a153d7bbb7000002">咨询部</option>
+	    	<select name="depId"  onchange="changePost(this)" id="department">
+			    <option value="${param.depId}">${param.depName}</option>
 			</select>
 
 	    </td>
 	    <td width="8%">职务：</td>
 	    <td width="62%">
-	    	<select name="crmPost.postId" id="postSelectId">
-			    <option value="">----请--选--择----</option>
-			    <option value="2c9091c14c78e58b014c78e6b34a0003">总监</option>
-			    <option value="2c9091c14c78e58b014c78e6d4510004" selected="selected">讲师</option>
+	    	<select name="postId" id="post">
+				<option value="${param.postId}">${param.postName}</option>
 			</select>
 	    </td>
 	  </tr>
 	  <tr>
 	    <td width="10%">入职时间：</td>
 	    <td width="20%">
-	    	<input type="text" name="onDutyDate" value="2012-02-12" readonly="readonly" onfocus="c.showMoreDay=true; c.show(this);"/>
+	    	<input type="text" name="onDutyDate" value="${param.onDutyDate}" readonly="readonly" onfocus="c.showMoreDay=true; c.show(this);"/>
 	    </td>
 	    <td width="8%"></td>
 	    <td width="62%"></td>
@@ -83,5 +81,49 @@
 	</table>
 </form>
 
+<script>
+	$(function () {
+		$.post("${pageContext.request.contextPath}/post/showDepart.action",
+				null,
+				function (data) {
+					var _html = "<option>----请--选--择----</option>";
+					$.each(data, function (index, per) {
+						_html += '<option value="' + per.depId + '">' + per.depName + '</option>';
+					});
+					$("#department").html(_html);
+				}, "json"
+		);
+
+		$("#post").click(function () {
+			$.post("${pageContext.request.contextPath}/post/showPost.action",
+					{departId:${param.depId}},
+					function (data) {
+						var _html = "";
+						$.each(data, function (index, per) {
+							_html += '<option value="' + per.depId + '">' + per.depName + '</option>';
+						});
+						$("#department").html(_html);
+					}, "json"
+			);
+		});
+
+		$("#department").change(function () {
+					$.post("${pageContext.request.contextPath}/post/showPost.action",
+							{
+								departId: $("#department").val()
+							},
+							function (data) {
+								var _html = "<option>----请--选--择----</option>";
+								$.each(data, function (index, per) {
+									_html += "<option value='" + per.postId + "'>" + per.postName + "</option>";
+								});
+								$("#post").html(_html);
+							}, "json"
+					)
+				}
+		)
+
+	})
+</script>
 </body>
 </html>

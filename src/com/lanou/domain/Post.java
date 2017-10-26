@@ -14,7 +14,6 @@ public class Post {
     public Post() {
     }
 
-
     public Post(String postId, String postName) {
         this.postId = postId;
         this.postName = postName;
@@ -22,6 +21,11 @@ public class Post {
 
     public Post(String postName) {
         this.postName = postName;
+    }
+
+    public Post(String postName, Department department) {
+        this.postName = postName;
+        this.department = department;
     }
 
     @Override

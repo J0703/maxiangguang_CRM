@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,13 +40,17 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
     private String postId;
     private String depId;
     private String staffId;
+    private String staffName;
 
+    private List<Department> departments;
+    private List<Post> posts;
 
 
     @Resource
     private StaffService staffService;
     @Resource
     private DepartmentService departmentService;
+
     @Resource
     private PostService postService;
     private List<Staff> staffs;
@@ -209,13 +214,51 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
      */
     public String prepareEdit(){
         Object[] params = {staffId};
-        Staff single = staffService.findSingle("from Staff where staffId =?", params);
+        Staff single = staffService.findSingle("from Staff where staffId=?", params);
+        System.out.println(single);
+
+        posts = postService.findAll("from Post");
+        for (Post post : posts) {
+            System.out.println(post);
+        }
 
         Object[] params2 = {single.getPost().getPostId()};
-        Post post2 = postService.findSingle("from Post where postId =?", params2);
-        single.setDepartment(post2.getDepartment());
+        Post singlePost = postService.findSingle("from Post where postId =?", params2);
 
-        staff = single;
+        Object[] params3 = {singlePost.getDepartment().getDepId()};
+        departments = departmentService.find("from Department", params3);
+        for (Department department : departments) {
+            System.out.println(department);
+        }
+
+
+
+        return SUCCESS;
+    }
+
+
+    /**
+     * 高级查询
+     * @return
+     */
+    public String find(){
+        String hql = "from Staff where 1=1";
+        List<String> params = new ArrayList<>();
+        if (!StringUtils.isBlank(depId)){
+            params.add(depId);
+            hql += " and depId=?";
+        }
+        if (!StringUtils.isBlank(postId)){
+            params.add(postId);
+            hql += " and postId=?";
+        }
+        if (!StringUtils.isBlank(staffName)){
+            params.add(staffName);
+            hql += " and staffId=?";
+        }
+
+        staffs = staffService.find(hql, params.toArray());
+
         return SUCCESS;
     }
 
@@ -228,12 +271,28 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
         return staff;
     }
 
+    public Staff getStaff() {
+        return staff;
+    }
+
+    public void setStaff(Staff staff) {
+        this.staff = staff;
+    }
+
     public List<Staff> getStaffs() {
         return staffs;
     }
 
     public void setStaffs(List<Staff> staffs) {
         this.staffs = staffs;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     public String getOldPassword() {
@@ -307,5 +366,21 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
 
     public void setStaffId(String staffId) {
         this.staffId = staffId;
+    }
+
+    public List<Department> getDepartments() {
+        return departments;
+    }
+
+    public void setDepartments(List<Department> departments) {
+        this.departments = departments;
+    }
+
+    public String getStaffName() {
+        return staffName;
+    }
+
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
     }
 }

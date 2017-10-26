@@ -90,7 +90,7 @@ public class PostAction extends ActionSupport implements ModelDriven<Post> {
         Department depart = departmentService.findSingle("from Department where depId=?", params);
 
         // 如果postId为空, 保存
-        if (post.getPostId().equals("") || post.getPostId() == null) {
+        if (post.getPostId() == null) {
 
             post.setDepartment(depart);
             postService.save(post);

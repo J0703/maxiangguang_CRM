@@ -8,6 +8,7 @@
 <title>无标题文档</title>
 
 <link href="${pageContext.request.contextPath}/css/sys.css" type="text/css" rel="stylesheet" />
+	<script src="../../jquery-3.2.1.js"></script>
 </head>
 
 <body >
@@ -24,7 +25,7 @@
    
     <td width="57%"align="right">
     	<%--高级查询 --%>
-		<a href="javascript:void(0)" onclick="condition()"><img src="${pageContext.request.contextPath}/images/button/gaojichaxun.gif" /></a>
+		<a href="javascript:void(0)" onclick="document.forms[0].submit()"><img src="${pageContext.request.contextPath}/images/button/gaojichaxun.gif" /></a>
     	<%--员工注入 --%>
 	  	<a href="${pageContext.request.contextPath}/pages/staff/addStaff.jsp">
 	  		<img src="${pageContext.request.contextPath}/images/button/tianjia.gif" />
@@ -36,13 +37,13 @@
 </table>
 
 <!-- 查询条件：马上查询 -->
-<form id="conditionFormId" action="${pageContext.request.contextPath}/staff/staffAction_findAll" method="post">
+<form id="conditionFormId" action="${pageContext.request.contextPath}/staff/find.action" method="post">
 	<table width="88%" border="0" style="margin: 20px;" >
 	  <tr>
 	    <td width="80px">部门：</td>
 	    <td width="200px">
 	    	
-	    	<select name="crmPost.crmDepartment.depId" onchange="changePost(this)">
+	    	<select name="depId" id="department">
 			    <option value="">--请选择部门--</option>
 			</select>
 
@@ -50,8 +51,8 @@
 	    <td width="80px" >职务：</td>
 	    <td width="200px" >
 	    	
-	    	<select name="crmPost.postId" id="postSelectId">
-			    <option value="">--请选择职务--</option>
+	    	<select name="postId" id="post">
+			    <option>--请选择职务--</option>
 			</select>
 
 	    </td>
@@ -88,7 +89,7 @@
 		<td align="center">${s.post.postName}</td>
 		<td width="7%" align="center">
 
-			<a href="${pageContext.request.contextPath}/staff/edit.action?&staffId=${s.staffId}"><img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img" /></a>
+			<a href="${pageContext.request.contextPath}/staff/prepareEdit.action?staffId=${s.staffId}"><img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img" /></a>
 			<%--<a href="${pageContext.request.contextPath}/pages/staff/editStaff.jsp?--%>
 			<%--loginName=${s.loginName}&loginPwd=${s.loginPwd}&staffName=${s.staffName}&--%>
 			<%--gender=${s.gender}&onDutyDate=${s.onDutyDate}&depId=${s.post.department.depId}&--%>
@@ -114,5 +115,37 @@
   </tr>
 </table>
 --%>
+
+ <script>
+	 $(function () {
+		 $.post("${pageContext.request.contextPath}/post/showDepart.action",
+				 null,
+				 function (data) {
+					 var _html = "<option>----请--选--择----</option>";
+					 $.each(data, function (index, per) {
+						 _html += '<option value="' + per.depId + '">' + per.depName + '</option>';
+					 });
+					 $("#department").html(_html);
+				 }, "json"
+		 );
+
+		 $("#department").change(function () {
+					 $.post("${pageContext.request.contextPath}/post/showPost.action",
+							 {
+								 departId: $("#department").val()
+							 },
+							 function (data) {
+								 var _html = "<option>----请--选--择----</option>";
+								 $.each(data, function (index, per) {
+									 _html += "<option value='" + per.postId + "'>" + per.postName + "</option>";
+								 });
+								 $("#post").html(_html);
+							 }, "json"
+					 )
+				 }
+		 )
+
+	 })
+ </script>
 </body>
 </html>

@@ -59,6 +59,13 @@
             <result name="success">/pages/staff/editStaff.jsp</result>
         </action>
 
+        <action name="find"
+                class="staffAction"
+                method="find">
+            <result name="success">/pages/staff/listStaff.jsp</result>
+            <result name="input">/pages/error.jsp</result>
+        </action>
+
     </package>
 
     <package name="department" extends="json-default" namespace="/department">

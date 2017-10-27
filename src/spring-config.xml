@@ -95,17 +95,18 @@
     <!--service层-->
     <bean class="com.lanou.service.impl.DepartmentServiceImpl"
           id="departmentService">
-        <property name="baseDao" ref="departmentDao"/>
+        <property name="departmentDao" ref="departmentDao"/>
     </bean>
 
     <bean class="com.lanou.service.impl.StaffServiceImpl"
           id="staffService">
-        <property name="baseDao" ref="staffDao"/>
+        <property name="staffDao" ref="staffDao"/>
+        <property name="postDao" ref="postDao"/>
     </bean>
 
     <bean class="com.lanou.service.impl.PostServiceImpl"
           id="postService">
-        <property name="baseDao" ref="postDao"/>
+        <property name="postDao" ref="postDao"/>
     </bean>
 
 

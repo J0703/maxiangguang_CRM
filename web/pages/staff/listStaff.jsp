@@ -52,7 +52,7 @@
 	    <td width="200px" >
 	    	
 	    	<select name="postId" id="post">
-			    <option>--请选择职务--</option>
+			    <option value="">--请选择职务--</option>
 			</select>
 
 	    </td>
@@ -85,15 +85,14 @@
 		<td align="center">${s.staffName}</td>
 		<td align="center">${s.gender}</td>
 		<td align="center">${s.onDutyDate}</td>
-		<td align="center">${s.department.depName}</td>
+		<td align="center">${s.post.department.depName}</td>
 		<td align="center">${s.post.postName}</td>
 		<td width="7%" align="center">
 
-			<a href="${pageContext.request.contextPath}/staff/prepareEdit.action?staffId=${s.staffId}"><img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img" /></a>
-			<%--<a href="${pageContext.request.contextPath}/pages/staff/editStaff.jsp?--%>
-			<%--loginName=${s.loginName}&loginPwd=${s.loginPwd}&staffName=${s.staffName}&--%>
-			<%--gender=${s.gender}&onDutyDate=${s.onDutyDate}&depId=${s.post.department.depId}&--%>
-			<%--postId=${s.post.postId}&postName=${s.post.postName}&depName=${s.post.department.depName}"><img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img" /></a>--%>
+			<a href="${pageContext.request.contextPath}/staff/prepareEdit.action?staffId=${s.staffId}&loginName=${s.loginName}&loginPwd=${s.loginPwd}&staffName=${s.staffName}&gender=${s.gender}
+			&onDutyDate=${s.onDutyDate}&depId=${s.post.department.depId}&
+			postId=${s.post.postId}&postName=${s.post.postName}&depName=${s.post.department.depName}">
+				<img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img" /></a>
 		</td>
 	</s:iterator>
 
@@ -121,7 +120,7 @@
 		 $.post("${pageContext.request.contextPath}/post/showDepart.action",
 				 null,
 				 function (data) {
-					 var _html = "<option>----请--选--择----</option>";
+					 var _html = "<option value=''>----请--选--择----</option>";
 					 $.each(data, function (index, per) {
 						 _html += '<option value="' + per.depId + '">' + per.depName + '</option>';
 					 });
@@ -135,7 +134,7 @@
 								 departId: $("#department").val()
 							 },
 							 function (data) {
-								 var _html = "<option>----请--选--择----</option>";
+								 var _html = "<option value=''>----请--选--择----</option>";
 								 $.each(data, function (index, per) {
 									 _html += "<option value='" + per.postId + "'>" + per.postName + "</option>";
 								 });

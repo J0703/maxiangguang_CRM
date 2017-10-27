@@ -39,7 +39,7 @@ public class MainTest {
 
         Post post = new Post("部长");
 
-        List<Department> all = departmentService.findAll("from Department");
+        List<Department> all = departmentService.findAll();
         for (Department department : all) {
             System.out.println(department);
         }

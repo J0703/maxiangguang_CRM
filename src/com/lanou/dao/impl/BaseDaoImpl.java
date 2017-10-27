@@ -5,6 +5,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -25,7 +26,8 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 
     @Override
     public void update(T t) {
-        getHibernateTemplate().update(t);
+        Session session = currentSession();
+        session.merge(t);
     }
 
     @Override
@@ -40,23 +42,18 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 
     @Override
     public T findSingle(String hql, Object[] params) {
-//        Session session = currentSession();
-//
-//        Query query = session.createQuery(hql);
-//
-//        if(params != null) {
-//            for(int i = 0; i < params.length; ++i) {
-//                query.setParameter(i, params[i]);
-//            }
-//        }
-//
-//        List<T> tList = query.list();
-
         List<T> tList = (List<T>) getHibernateTemplate().find(hql, params);
         if (tList.size() > 0) {
             return tList.get(0);
         }
         return null;
+    }
+
+    @Override
+    public T get(Class<T> tClass, Serializable id) {
+        Session session = currentSession();
+        T t = (T) session.get(tClass, id);
+        return t;
     }
 
 }

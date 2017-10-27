@@ -42,7 +42,7 @@ public class PostAction extends ActionSupport implements ModelDriven<Post> {
      * @return
      */
     public String findAll() {
-        posts = postService.findAll("from Post");
+        posts = postService.findAll();
 
         for (Post post1 : posts) {
             System.out.println(post1);
@@ -55,7 +55,7 @@ public class PostAction extends ActionSupport implements ModelDriven<Post> {
      * @return
      */
     public String showDepart() {
-        departmentList = departmentService.findAll("from Department");
+        departmentList = departmentService.findAll();
         return SUCCESS;
     }
 
@@ -67,8 +67,7 @@ public class PostAction extends ActionSupport implements ModelDriven<Post> {
 
         System.out.println(departId);
 
-        Object[] params = {departId};
-        postList = postService.find("from Post where depId= ?", params);
+        postList = postService.findByDepId(departId);
         for (Post post1 : postList) {
             System.out.println(post1);
         }
@@ -86,8 +85,8 @@ public class PostAction extends ActionSupport implements ModelDriven<Post> {
         System.out.println(post.getDepartment());
 
         // 根据departId查询部门
-        Object[] params = {departId};
-        Department depart = departmentService.findSingle("from Department where depId=?", params);
+
+        Department depart = departmentService.findById(departId);
 
         // 如果postId为空, 保存
         if (post.getPostId() == null) {
@@ -98,8 +97,7 @@ public class PostAction extends ActionSupport implements ModelDriven<Post> {
             // 不为空, 更新
         } else {
             // 通过postId查询职务
-            Object[] params1 = {post.getPostId()};
-            Post post1 = postService.findSingle("from Post where postId=?", params1);
+            Post post1 = postService.findById(post.getPostId());
 
             // 如果 前台职务id 和 数据库查 出来的职务 id 相同就进行 更新
             if (post1.getPostId().equals(post.getPostId()) && post1.getDepartment().getDepId().equals(depart.getDepId())) {
@@ -112,7 +110,6 @@ public class PostAction extends ActionSupport implements ModelDriven<Post> {
                 post.setDepartment(depart);
                 postService.save(post);
             }
-
 
         }
 

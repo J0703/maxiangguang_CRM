@@ -1,5 +1,8 @@
 package com.lanou.service;
 
+import com.lanou.domain.Staff;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -49,4 +52,5 @@ public interface BaseService<T> {
      */
     T findSingle(String hql, Object[] params);
 
+    T get(Class<T> tClass, Serializable id);
 }

@@ -37,34 +37,32 @@
     </tr>
 </table>
 
-<form action="/crm2/staff/staffAction_edit.action" method="post">
+<form action="${pageContext.request.contextPath}/staff/edit.action" method="post">
 
     <input type="hidden" name="staffId" value="2c9091c14c78e58b014c78e7ecd90007"/>
 
     <table width="88%" border="0" class="emp_table" style="width:80%;">
         <tr>
             <td>登录名：</td>
-            <td><input type="text" name="loginName" value="#attr.loginName"/></td>
+            <td><input type="text" name="loginName" value="${param.loginName}"/></td>
             <td>密码：</td>
-            <td><input type="password" name="loginPwd" value="${st.loginPwd}"/></td>
+            <td><input type="password" name="loginPwd" value="${param.loginPwd}"/></td>
         </tr>
         <tr>
             <td>姓名：</td>
-            <td><input type="text" name="staffName" value="${st.staffName}"/></td>
+            <td><input type="text" name="staffName" value="${param.staffName}"/></td>
             <td>性别：</td>
             <td>
-                <input type="radio" name="gender" value="男" <c:if test="${st.gender eq '男'}">checked</c:if>/>男
-                <input type="radio" name="gender" value="女" <c:if test="${st.gender eq '女'}">checked</c:if>/>女
+                <input type="radio" name="gender" value="男" <c:if test="${param.gender eq '男'}">checked</c:if>/>男
+                <input type="radio" name="gender" value="女" <c:if test="${param.gender eq '女'}">checked</c:if>/>女
             </td>
         </tr>
         <tr>
             <td width="10%">所属部门：</td>
             <td width="20%">
-                <select name="depId" onchange="changePost(this)" id="department">
-                    <%--<option value="${param.depId}">${param.depName}</option>--%>
+                <select name="depId"  id="department">
                     <s:iterator var="dep" value="departments">
-                        <%--<c:if test="${dep.depId eq staff.post.department.depId}">selected</c:if>--%>
-                        <option value="${dep.depId}">${dep.depName}</option>
+                        <option value="${dep.depId}" <c:if test="${dep.depId eq param.depId}">selected</c:if>>${dep.depName}</option>
                     </s:iterator>
                 </select>
 
@@ -72,10 +70,8 @@
             <td width="8%">职务：</td>
             <td width="62%">
                 <select name="postId" id="post">
-                    <%--<option value="${param.postId}">${param.postName}</option>--%>
                     <s:iterator value="posts" var="po">
-                        <%--<c:if test="${po.postId eq staff.post.postId}">selected</c:if>--%>
-                        <option value="${po.postId}">${po.postName}</option>
+                        <option value="${po.postId}" <c:if test="${po.postId eq param.postId}">selected</c:if>>${po.postName}</option>
                     </s:iterator>
                 </select>
             </td>

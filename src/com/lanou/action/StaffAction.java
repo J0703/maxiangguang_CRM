@@ -6,20 +6,16 @@ import com.lanou.domain.Staff;
 import com.lanou.service.DepartmentService;
 import com.lanou.service.PostService;
 import com.lanou.service.StaffService;
-import com.lanou.service.impl.StaffServiceImpl;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by dllo on 17/10/25.
@@ -110,7 +106,8 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
     }
 
     /**
-     *  验证输入
+     * 验证输入
+     *
      * @return
      */
     public String validateEditLoginPwd() {
@@ -128,7 +125,7 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
         if (StringUtils.isBlank(newPassword)) {
             addActionError("新密码不能为空");
         }
-        if (!StringUtils.isBlank(reNewPassword) && !StringUtils.isBlank(oldPassword)){
+        if (!StringUtils.isBlank(reNewPassword) && !StringUtils.isBlank(oldPassword)) {
             if (!reNewPassword.equals(newPassword)) {
                 addActionError("两次密码不一致");
             }
@@ -137,44 +134,33 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
     }
 
     /**
-     *  退出登录
+     * 退出登录
+     *
      * @return
      */
-    public String logout(){
+    public String logout() {
         ActionContext.getContext().getApplication().remove("staff");
         return SUCCESS;
     }
 
     /**
-     *  查询所有员工
+     * 查询所有员工
+     *
      * @return
      */
-    public String findAll(){
-        staffs = staffService.findAll("from Staff");
-
-        for (Staff staff1 : staffs) {
-            Object[] params = {staff1.getPost().getPostId()};
-            Post post = postService.findSingle("from Post where postId = ?", params);
-
-            Object[] params1 = {post.getDepartment().getDepId()};
-            Department department = departmentService.findSingle("from Department where depId = ?", params1);
-
-            staff1.setDepartment(department);
-        }
-
+    public String findAll() {
+        staffs = staffService.findAll();
         return SUCCESS;
     }
 
     /**
-     *  添加员工
+     * 添加员工
+     *
      * @return
      */
-    public String add(){
+    public String add() {
 
-        System.out.println(staff);
-
-        Object[] params = {postId};
-        Post post = postService.findSingle("from Post where postId =?", params);
+        Post post = postService.findById(postId);
         staff.setPost(post);
 
         staffService.save(staff);
@@ -182,26 +168,27 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
     }
 
     /**
-     *  添加验证
+     * 添加验证
+     *
      * @return
      */
-    public String validateAdd(){
-        if (StringUtils.isBlank(staff.getLoginName())){
+    public String validateAdd() {
+        if (StringUtils.isBlank(staff.getLoginName())) {
             addActionError("登录名不能为空");
         }
-        if (StringUtils.isBlank(staff.getLoginPwd())){
+        if (StringUtils.isBlank(staff.getLoginPwd())) {
             addActionError("密码不能为空");
         }
-        if (StringUtils.isBlank(staff.getStaffName())){
+        if (StringUtils.isBlank(staff.getStaffName())) {
             addActionError("用户名不能为空");
         }
-        if (StringUtils.isBlank(staff.getOnDutyDate().toString())){
+        if (StringUtils.isBlank(staff.getOnDutyDate().toString())) {
             addActionError("入职时间不能为空");
         }
-        if (StringUtils.isBlank(depId)){
+        if (StringUtils.isBlank(depId)) {
             addActionError("部门不能为空");
         }
-        if (StringUtils.isBlank(postId)){
+        if (StringUtils.isBlank(postId)) {
             addActionError("职务不能为空");
         }
 
@@ -209,28 +196,38 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
     }
 
     /**
-     *  编辑准备
+     * 编辑准备
+     *
      * @return
      */
-    public String prepareEdit(){
-        Object[] params = {staffId};
-        Staff single = staffService.findSingle("from Staff where staffId=?", params);
-        System.out.println(single);
+    public String prepareEdit() {
 
-        posts = postService.findAll("from Post");
-        for (Post post : posts) {
-            System.out.println(post);
-        }
+        Staff staff1 = staffService.get(staff.getStaffId());
 
-        Object[] params2 = {single.getPost().getPostId()};
-        Post singlePost = postService.findSingle("from Post where postId =?", params2);
+        posts = postService.findByDepId(staff1.getPost().getDepartment().getDepId());
 
-        Object[] params3 = {singlePost.getDepartment().getDepId()};
-        departments = departmentService.find("from Department", params3);
-        for (Department department : departments) {
-            System.out.println(department);
-        }
+        departments = departmentService.findAll();
 
+        return SUCCESS;
+    }
+
+    /**
+     *  编辑员工
+     * @return
+     */
+    public String edit(){
+        System.out.println(staff);
+        System.out.println(postId);
+
+        // 给员工设置职务
+        Post post = postService.get(postId);
+
+        staff.setStaffId(staff.getStaffId());
+        staff.setPost(post);
+
+        System.out.println(staff);
+
+        staffService.update(staff);
 
 
         return SUCCESS;
@@ -239,30 +236,15 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
 
     /**
      * 高级查询
+     *
      * @return
      */
-    public String find(){
-        String hql = "from Staff where 1=1";
-        List<String> params = new ArrayList<>();
-        if (!StringUtils.isBlank(depId)){
-            params.add(depId);
-            hql += " and depId=?";
-        }
-        if (!StringUtils.isBlank(postId)){
-            params.add(postId);
-            hql += " and postId=?";
-        }
-        if (!StringUtils.isBlank(staffName)){
-            params.add(staffName);
-            hql += " and staffId=?";
-        }
+    public String find() {
 
-        staffs = staffService.find(hql, params.toArray());
+        staffs = staffService.find(depId, postId, staffName);
 
         return SUCCESS;
     }
-
-
 
 
     @Override
@@ -270,6 +252,7 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
         staff = new Staff();
         return staff;
     }
+
 
     public Staff getStaff() {
         return staff;

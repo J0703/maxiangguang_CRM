@@ -59,6 +59,13 @@
             <result name="success">/pages/staff/editStaff.jsp</result>
         </action>
 
+        <!--编辑员工-->
+        <action name="edit"
+                class="staffAction"
+                method="edit">
+            <result name="success" type="chain">findAll</result>
+        </action>
+
         <action name="find"
                 class="staffAction"
                 method="find">

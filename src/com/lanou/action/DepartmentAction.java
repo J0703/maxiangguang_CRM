@@ -34,8 +34,7 @@ public class DepartmentAction extends ActionSupport implements ModelDriven<Depar
     public String add() {
 
         // 查询数据库中是否存在
-        Object[] params = {department.getDepId()};
-        Department findDept = departmentService.findSingle("from Department where depId=?", params);
+        Department findDept = departmentService.findById(department.getDepId());
 
         // 存在就跟新
         if (null != findDept) {
@@ -55,8 +54,7 @@ public class DepartmentAction extends ActionSupport implements ModelDriven<Depar
      */
     public String findAll() {
 
-        String hql = "from Department";
-        departments = departmentService.findAll(hql);
+        departments = departmentService.findAll();
 
         return SUCCESS;
     }

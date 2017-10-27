@@ -39,7 +39,7 @@
 
 <form action="${pageContext.request.contextPath}/staff/edit.action" method="post">
 
-    <input type="hidden" name="staffId" value="2c9091c14c78e58b014c78e7ecd90007"/>
+    <input type="hidden" name="staffId" value="${param.staffId}"/>
 
     <table width="88%" border="0" class="emp_table" style="width:80%;">
         <tr>

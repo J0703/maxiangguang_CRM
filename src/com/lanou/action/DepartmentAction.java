@@ -1,6 +1,7 @@
 package com.lanou.action;
 
 import com.lanou.domain.Department;
+import com.lanou.util.page.PageBean;
 import com.lanou.service.DepartmentService;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -25,6 +26,7 @@ public class DepartmentAction extends ActionSupport implements ModelDriven<Depar
     // 获得业务对象
     @Resource
     private DepartmentService departmentService;
+    private String pc;
 
     /**
      * 添加,修改部门
@@ -53,11 +55,34 @@ public class DepartmentAction extends ActionSupport implements ModelDriven<Depar
      * @return
      */
     public String findAll() {
-
         departments = departmentService.findAll();
+        return SUCCESS;
+    }
+
+    /**
+     *  分页
+     * @return
+     */
+    public String query(){
+        // 获取 当前页码数
+        int pc = getPc(this.pc);
+
+        // 指定 每页记录数
+        int ps = 5;
+        // 传递 pc , ps 获得pageBean
+        departmentService.findAll();
+
 
         return SUCCESS;
     }
+
+    private int getPc(String pc) {
+        if (null == this.pc || this.pc.trim().isEmpty()){
+            return 1;
+        }
+        return Integer.parseInt(pc);
+    }
+
 
     @Override
     public Department getModel() {

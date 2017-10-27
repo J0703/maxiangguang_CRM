@@ -1,6 +1,7 @@
 package com.lanou.service;
 
 import com.lanou.domain.Department;
+import com.lanou.util.page.PageBean;
 
 import java.io.Serializable;
 import java.util.List;
@@ -46,4 +47,7 @@ public interface DepartmentService {
     Department findById(String depName);
 
     Department get(Serializable id);
+
+    PageBean<Department> findAll(Department department, int pageNum, int pageSize);
+
 }

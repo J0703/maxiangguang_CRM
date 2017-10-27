@@ -42,9 +42,9 @@
         <tr>
             <td>部门名称：</td>
             <td><input type="text" name="depName" value="${param.depName}"/></td>
-            <c:if test="${param.depId != null}">
-                <td><input type="text" name="depId" value="${param.depId}" readonly/></td>
-            </c:if>
+
+            <td><input type="hidden" name="depId" value="${param.depId}"/></td>
+
         </tr>
     </table>
 </form>

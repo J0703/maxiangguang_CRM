@@ -2,9 +2,12 @@ package com.lanou.service.impl;
 
 import com.lanou.dao.DepartmentDao;
 import com.lanou.domain.Department;
+import com.lanou.util.page.PageBean;
 import com.lanou.service.DepartmentService;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -51,6 +54,21 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public Department get(Serializable id) {
         return departmentDao.get(Department.class, id);
+    }
+
+    @Override
+    public PageBean<Department> findAll(Department department, int pageNum, int pageSize) {
+        // 拼接条件查询
+        StringBuilder sbCondition = new StringBuilder();
+
+        List<Object> paramsList = new ArrayList<>();
+
+        // 过滤条件
+        if (StringUtils.isBlank(department.getDepName())){
+
+        }
+
+        return null;
     }
 
     public DepartmentDao getDepartmentDao() {

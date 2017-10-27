@@ -46,11 +46,10 @@
             </td>
             <td>职务：</td>
             <td><input type="text" name="postName" value="${param.postName}"/></td>
-                <c:if test="${param.postId != null}">
-                    <td>
-                        <input type="text" name="postId" value="${param.postId}" readonly>
-                    </td>
-                </c:if>
+            <td>
+                <input type="hidden" name="postId" value="${param.postId}" >
+            </td>
+
         </tr>
     </table>
 </form>
@@ -62,7 +61,7 @@
                 function (data) {
                     var _html = "";
                     $.each(data, function (index, per) {
-                        _html += "<option value='"+ per.depId + "'>" + per.depName + "</option>";
+                        _html += "<option value='" + per.depId + "'>" + per.depName + "</option>";
                     });
                     $("#department").html(_html);
                 }, "json"

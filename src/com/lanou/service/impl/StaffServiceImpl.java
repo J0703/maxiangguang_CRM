@@ -5,6 +5,7 @@ import com.lanou.dao.StaffDao;
 import com.lanou.domain.Post;
 import com.lanou.domain.Staff;
 import com.lanou.service.StaffService;
+import com.lanou.util.EncryptUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,6 +21,11 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public void save(Staff staff) {
+
+        // 密码加密
+        String pwd = EncryptUtil.getMD5Value(staff.getLoginPwd());
+        staff.setLoginPwd(pwd);
+
         staffDao.save(staff);
     }
 
@@ -57,12 +63,17 @@ public class StaffServiceImpl implements StaffService {
      */
     @Override
     public List<Staff> findByDepId(String depId) {
+
+        List<Staff> p = new ArrayList<>();
+
         Object[] param = {depId};
         List<Post> posts = postDao.find("from Post where depId =?", param);
-        List<Staff> p = new ArrayList<>();
+
         for (Post post : posts) {
+
             Object[] param2 = {post.getPostId()};
             List<Staff> staffs = staffDao.find("from Staff where postId=?", param2);
+
             for (Staff staff : staffs) {
                 p.add(staff);
             }
@@ -80,23 +91,35 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public List<Staff> find(String depId, String postId, String staffName) {
 
+        List<Staff> staffList = new ArrayList<>();
 
-        String hql = "from Staff where 1=1";
-        List<String> params = new ArrayList<>();
-//        if ( depId != null || !depId.equals("")){
-//            params.add(depId);
-//            hql += " and depId=?";
-//        }
-        if (!postId.equals("") || postId != null) {
-            params.add(postId);
-            hql += " and postId=?";
-        }
-        if (staffName != null || !staffName.equals("")) {
-            params.add(staffName);
-            hql += " and staffId=?";
+        if ( !depId.equals("") && postId.equals("") && staffName.equals("")){
+
+            List<Staff> byDepId = findByDepId(depId);
+            for (Staff staff : byDepId) {
+                staffList.add(staff);
+            }
+        }else {
+            String hql = "from Staff";
+            List<String> params = new ArrayList<>();
+
+            hql += " where 1=1";
+
+            if (!postId.equals("")) {
+                params.add(postId);
+                hql += " and postId=?";
+            }
+            if (!staffName.equals("")) {
+                hql += " and staffName like '%"+staffName+"%'";
+            }
+            List<Staff> list = staffDao.find(hql, params.toArray());
+            for (Staff staff : list) {
+                staffList.add(staff);
+            }
+
         }
 
-        return staffDao.find(hql, params.toArray());
+        return staffList;
     }
 
     @Override
@@ -133,4 +156,5 @@ public class StaffServiceImpl implements StaffService {
     public void setPostDao(PostDao postDao) {
         this.postDao = postDao;
     }
+
 }

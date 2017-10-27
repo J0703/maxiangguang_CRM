@@ -10,9 +10,22 @@
 
     <!--将struts2中的对象交给spring完成-->
     <constant name="struts.objectFactory" value="spring"/>
+    
+    <package name="common" extends="struts-default">
+        <!--自定义拦截器-->
+        <interceptors>
+            <interceptor name="loginInterceptor" class="com.lanou.util.LoginInterceptor"/>
+            <interceptor-stack name="myInterceptorStack">
+                <interceptor-ref name="loginInterceptor"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+    </package>
 
 
     <package name="staff" extends="json-default" namespace="/staff">
+        <!--拦截-->
+        <default-interceptor-ref name="modelDrivenStack"/>
         <!--登录-->
         <action name="login"
                 class="com.lanou.action.StaffAction"
@@ -76,6 +89,9 @@
     </package>
 
     <package name="department" extends="json-default" namespace="/department">
+
+        <default-interceptor-ref name="modelDrivenStack"/>
+
         <!--查询所有部门-->
         <action name="findAll"
                 class="com.lanou.action.DepartmentAction"
@@ -92,6 +108,8 @@
     </package>
 
     <package name="post" extends="json-default" namespace="/post">
+
+        <default-interceptor-ref name="modelDrivenStack"/>
 
         <!--查询所有职务-->
         <action name="findAll"

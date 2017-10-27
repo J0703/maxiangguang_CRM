@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -216,17 +215,21 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
      * @return
      */
     public String edit(){
-        System.out.println(staff);
-        System.out.println(postId);
 
         // 给员工设置职务
+        Department byId = departmentService.findById(postId);
         Post post = postService.get(postId);
 
-        staff.setStaffId(staff.getStaffId());
+        staff.setDepartment(byId);
         staff.setPost(post);
 
+        Staff byStaffId = staffService.findByStaffId(staff.getStaffId());
+
+        System.out.println(byStaffId);
         System.out.println(staff);
 
+
+        // 执行修改
         staffService.update(staff);
 
 
@@ -241,7 +244,11 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
      */
     public String find() {
 
-        staffs = staffService.find(depId, postId, staffName);
+        System.out.println(depId);
+        System.out.println(postId);
+        System.out.println(staff.getStaffName());
+
+        staffs = staffService.find(depId, postId, staff.getStaffName());
 
         return SUCCESS;
     }

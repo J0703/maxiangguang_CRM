@@ -53,4 +53,5 @@ public interface BaseDao<T> {
     T findSingle(String hql, Object[] params);
 
     T get(Class<T> tClass, Serializable id);
+
 }

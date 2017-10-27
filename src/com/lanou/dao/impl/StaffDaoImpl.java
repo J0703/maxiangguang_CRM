@@ -5,6 +5,8 @@ import com.lanou.domain.Staff;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
+import java.util.List;
+
 /**
  * Created by dllo on 17/10/25.
  */
@@ -12,19 +14,31 @@ public class StaffDaoImpl extends BaseDaoImpl<Staff> implements StaffDao {
 
     @Override
     public void update(Staff staff) {
-        Session session = currentSession();
-        SQLQuery sqlQuery=session.createSQLQuery(
-                "UPDATE Staff SET loginName=?, loginPwd=?, staffName=?, gender=?, onDutyDate=?, postId=? WHERE staffId =?");
 
-        sqlQuery.setParameter(1, staff.getLoginName());
-        sqlQuery.setParameter(2, staff.getLoginPwd());
-        sqlQuery.setParameter(3, staff.getStaffName());
-        sqlQuery.setParameter(4, staff.getGender());
-        sqlQuery.setParameter(5, staff.getOnDutyDate());
-        sqlQuery.setParameter(6, staff.getPost().getPostId());
-        sqlQuery.setParameter(7, staff.getStaffId());
+        Session session = currentSession();
+        SQLQuery sqlQuery = session.createSQLQuery(
+                "UPDATE crm_staff SET loginName=?, loginPwd=?, staffName=?, gender=?, onDutyDate=?, postId=? WHERE staffId =?");
+
+        sqlQuery.setString(0, staff.getLoginName());
+        sqlQuery.setString(1, staff.getLoginPwd());
+        sqlQuery.setString(2, staff.getStaffName());
+        sqlQuery.setString(3, staff.getGender());
+        sqlQuery.setDate(4, staff.getOnDutyDate());
+        sqlQuery.setString(5, staff.getPost().getPostId());
+        sqlQuery.setString(6, staff.getStaffId());
 
         sqlQuery.executeUpdate();
 
     }
+
+//    @Override
+//    public List<Staff> find(String hql, Object[] params) {
+//        Session session = currentSession();
+//        SQLQuery sqlQuery = session.createSQLQuery(hql);
+//        for (int i = 0; i < params.length; i++) {
+//            sqlQuery.setString(i, (String) params[i]);
+//        }
+//
+//        sqlQuery.
+//    }
 }

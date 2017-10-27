@@ -48,11 +48,12 @@ FONT-SIZE: 12px; COLOR: #4b4b4b; LINE-HEIGHT: 18px; TEXT-DECORATION: none
 					<br/>
 					<br/>
 					<font color="#ff0000">
+						${msg}
 						<s:actionerror/>
-					</font> 
+					</font>
 					<br/>
-					用户名：<input type="text" name="loginName" class="msg" value="${staff.loginName}" /><br/><br/>
-					密&nbsp;码：<input type="password" name="loginPwd" class="msg" ${staff.loginPwd}/><br/><br/>
+					用户名：<input type="text" name="loginName" class="msg" value="${staff.loginName}" placeholder="LoginName" autocomplete="off"/><br/><br/>
+					密&nbsp;码：<input type="password" name="loginPwd" class="msg" ${staff.loginPwd} placeholder="Password" oncontextmenu="return false" onpaste="return false"/><br/><br/>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="submit" class="btn" value="登录 " />
 					

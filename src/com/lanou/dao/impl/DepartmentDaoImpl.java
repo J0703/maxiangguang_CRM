@@ -2,6 +2,7 @@ package com.lanou.dao.impl;
 
 import com.lanou.dao.DepartmentDao;
 import com.lanou.domain.Department;
+import com.lanou.util.PageHibernateCallback;
 
 import java.util.List;
 
@@ -13,7 +14,8 @@ public class DepartmentDaoImpl extends BaseDaoImpl<Department> implements Depart
 
     @Override
     public int getTotalRecord(String condition, Object[] params) {
-        String hql = "select count(*) from Department where 1=1" + condition;
+        String hql = "select count(d) from Department d where 1=1";
+        hql += null == condition ? "" : condition;
 
         List<Long> find = (List<Long>) this.getHibernateTemplate().find(hql, params);
 
@@ -24,8 +26,15 @@ public class DepartmentDaoImpl extends BaseDaoImpl<Department> implements Depart
     }
 
     @Override
-    public List<Department> findAll(String condition, Object[] params, int pc, int ps) {
-        return null;
+    public List<Department> findAll(String condition, Object[] params, int startIndex, int pageSize) {
+
+        String hql =  "from Department where 1=1 ";
+
+        // 条件判断
+        hql += null == condition ? "" : condition;
+
+        return this.getHibernateTemplate().execute(
+                new PageHibernateCallback<Department>(hql, params, startIndex, pageSize));
     }
 
 

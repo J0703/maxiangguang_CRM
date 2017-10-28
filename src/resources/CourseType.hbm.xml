@@ -8,7 +8,7 @@
         </id>
         <property name="courseName"/>
         <property name="courseCost"/>
-        <property name="total" length="11"/>
+        <property name="total"/>
         <property name="remark"/>
 
     </class>

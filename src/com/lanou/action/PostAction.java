@@ -1,11 +1,13 @@
 package com.lanou.action;
 
 import com.lanou.domain.Department;
+import com.lanou.domain.PageBean;
 import com.lanou.domain.Post;
 import com.lanou.service.DepartmentService;
 import com.lanou.service.PostService;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -30,6 +32,12 @@ public class PostAction extends ActionSupport implements ModelDriven<Post> {
     // 二级联动装载 职务
     private List<Post> postList;
 
+    private int pageNum;
+    private PageBean<Post> pageBean;
+
+    // 每页显示记录数
+    private int pageSize = 4;
+
 
     @Resource
     private PostService postService;
@@ -47,6 +55,16 @@ public class PostAction extends ActionSupport implements ModelDriven<Post> {
         for (Post post1 : posts) {
             System.out.println(post1);
         }
+        return SUCCESS;
+    }
+
+    /**
+     *  分页查询
+     */
+    public String findAllPost(){
+
+        pageBean = postService.findAll(pageNum, pageSize);
+
         return SUCCESS;
     }
 
@@ -82,7 +100,10 @@ public class PostAction extends ActionSupport implements ModelDriven<Post> {
      */
     public String add() {
 
-        System.out.println(post.getDepartment());
+        if (StringUtils.isBlank(post.getPostName())){
+            addActionError("职务名不能为空!");
+            return ERROR;
+        }
 
         // 根据departId查询部门
 
@@ -178,5 +199,21 @@ public class PostAction extends ActionSupport implements ModelDriven<Post> {
 
     public void setPostList(List<Post> postList) {
         this.postList = postList;
+    }
+
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public PageBean<Post> getPageBean() {
+        return pageBean;
+    }
+
+    public void setPageBean(PageBean<Post> pageBean) {
+        this.pageBean = pageBean;
     }
 }

@@ -17,6 +17,14 @@ public interface DepartmentDao extends BaseDao<Department> {
      */
     int getTotalRecord(String condition, Object[] params);
 
+    /**
+     *  分页查询
+     * @param condition
+     * @param params
+     * @param startIndex
+     * @param pageSize
+     * @return
+     */
+    List<Department> findAll(String condition, Object[] params, int startIndex, int pageSize);
 
-    List<Department> findAll(String condition, Object[] params, int pc, int ps);
 }

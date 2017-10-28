@@ -46,7 +46,7 @@
     <td width="6%" align="center">职务名称</td>
     <td width="7%" align="center">编辑</td>
   </tr>
-    <s:iterator value="posts" var="p">
+    <s:iterator value="pageBean.data" var="p">
         <tr class="tabtd2">
             <td align="center">${p.department.depName}</td>
             <td align="center">${p.postName}</td>
@@ -61,15 +61,26 @@
 
 <table border="0" cellspacing="0" cellpadding="0" align="center">
   <tr>
-    <td align="right">
-    	<span>第1/3页</span>
-        <span>
-        	<a href="#">[首页]</a>&nbsp;&nbsp;
-            <a href="#">[上一页]</a>&nbsp;&nbsp;
-            <a href="#">[下一页]</a>&nbsp;&nbsp;
-            <a href="#">[尾页]</a>
+      <td align="right">
+          <span>第${pageBean.pageNum}/${pageBean.totalPage}页</span>
+          <span>
+        	<a href="${pageContext.request.contextPath}/post/findAllPost.action">[首页]</a>&nbsp;&nbsp;
+
+            <a href="${pageContext.request.contextPath}
+                /post/findAllPost.action?pageNum=${pageBean.pageNum - 1}">[上一页]</a>&nbsp;&nbsp;
+
+            <a
+                    <c:choose>
+                        <c:when test="${pageBean.pageNum >= pageBean.totalPage}">href="#"</c:when>
+                        <c:otherwise>href="${pageContext.request.contextPath}
+                            /department/findAllPost.action?pageNum=${pageBean.pageNum + 1}"</c:otherwise>
+                    </c:choose>
+            >[下一页]</a>&nbsp;&nbsp;
+
+            <a href="${pageContext.request.contextPath}
+                /post/findAllPost.action?pageNum=${pageBean.totalPage}">[尾页]</a>
         </span>
-    </td>
+      </td>
   </tr>
 </table>
 </body>

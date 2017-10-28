@@ -21,7 +21,7 @@
 
         <many-to-one name="courseType"
                      class="com.lanou.domain.CourseType"
-                     column="courseTypeId"
+                     column="courseId"
                      lazy="false"
                      cascade="all"/>
     </class>

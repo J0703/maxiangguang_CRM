@@ -1,6 +1,7 @@
 package com.lanou.service;
 
 
+import com.lanou.domain.PageBean;
 import com.lanou.domain.Post;
 
 import java.io.Serializable;
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * Created by dllo on 17/10/25.
  */
-public interface PostService {
+public interface PostService{
 
     /**
      *  保存某个对象
@@ -51,4 +52,6 @@ public interface PostService {
 
 
     Post get(Serializable id);
+
+    PageBean<Post> findAll(int pageNum, int pageSize);
 }

@@ -2,14 +2,11 @@ package com.lanou.service.impl;
 
 import com.lanou.dao.DepartmentDao;
 import com.lanou.domain.Department;
-import com.lanou.util.page.PageBean;
+import com.lanou.domain.PageBean;
 import com.lanou.service.DepartmentService;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-
 
 /**
  * Created by dllo on 17/10/25.
@@ -57,18 +54,38 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public PageBean<Department> findAll(Department department, int pageNum, int pageSize) {
-        // 拼接条件查询
-        StringBuilder sbCondition = new StringBuilder();
+    public PageBean<Department> findAll(int pageNum, int pageSize) {
 
-        List<Object> paramsList = new ArrayList<>();
 
-        // 过滤条件
-        if (StringUtils.isBlank(department.getDepName())){
+        // 查询出总的记录数(没有条件, 参数)
+        int totalRecord = departmentDao.getTotalRecord(null, null);
 
+        // 判断是否是空
+        if (pageNum == 0) pageNum = 1;
+
+        // 定义总页数
+        int totalPage = 0;
+
+        // 总记录数为0,总页数为1, 否则通过计算公式得出
+        totalPage = 0 == totalRecord ? 1 : totalRecord;
+        if (totalRecord != 0) {
+            if (totalRecord % pageSize == 0) {
+                totalPage = totalRecord / pageSize;
+            } else {
+                totalPage = totalRecord / pageSize + 1;
+            }
         }
 
-        return null;
+        // 创建pageBean对象
+        PageBean<Department> pageBean = new PageBean(pageNum, pageSize, totalRecord, totalPage);
+
+
+        // 将查询到的数据封装到 pageBean中
+        List<Department> data = departmentDao.findAll(null, null, pageNum, pageSize);
+
+        pageBean.setData(data);
+
+        return pageBean;
     }
 
     public DepartmentDao getDepartmentDao() {

@@ -1,6 +1,8 @@
 package com.lanou.dao.impl;
 
 import com.lanou.dao.BaseDao;
+import com.lanou.domain.Department;
+import com.lanou.util.PageHibernateCallback;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
@@ -54,6 +56,33 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
         Session session = currentSession();
         T t = (T) session.get(tClass, id);
         return t;
+    }
+
+    @Override
+    public int getTotalRecord(T tClass, String condition, Object[] params) {
+
+
+        String hql = "select count(d) from " + tClass + " d where 1=1";
+        List<Long> totalRecord;
+        if (params == null){
+            totalRecord = (List<Long>) this.getHibernateTemplate().find(hql);
+        }else {
+            totalRecord = (List<Long>) this.getHibernateTemplate().find(hql, params);
+        }
+
+        return totalRecord != null ? totalRecord.get(0).intValue() : 0;
+    }
+
+    @Override
+    public List<Department> findAll(T t, String condition, Object[] params, int pageNum, int pageSize) {
+
+        String hql =  "from "+ t +" where 1=1 ";
+
+        // 条件判断
+        hql += null == condition ? "" : condition;
+
+        return this.getHibernateTemplate().execute(
+                new PageHibernateCallback<Department>(hql, params, pageNum, pageSize));
     }
 
 }

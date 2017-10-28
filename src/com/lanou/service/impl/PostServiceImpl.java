@@ -1,6 +1,7 @@
 package com.lanou.service.impl;
 
 import com.lanou.dao.PostDao;
+import com.lanou.domain.PageBean;
 import com.lanou.domain.Post;
 import com.lanou.service.PostService;
 
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * Created by dllo on 17/10/25.
  */
-public class PostServiceImpl implements PostService {
+public class PostServiceImpl extends BaseServiceImpl<Post> implements PostService {
 
     private PostDao postDao;
 
@@ -55,6 +56,12 @@ public class PostServiceImpl implements PostService {
     @Override
     public Post get(Serializable id) {
         return postDao.get(Post.class, id);
+    }
+
+    @Override
+    public PageBean<Post> findAll(int pageNum, int pageSize) {
+
+        return null;
     }
 
     public PostDao getPostDao() {

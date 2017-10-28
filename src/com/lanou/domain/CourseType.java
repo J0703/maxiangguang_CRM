@@ -13,11 +13,18 @@ public class CourseType {
     public CourseType() {
     }
 
-
-    public CourseType(String courseName, double courseCost, int tatal, String remark) {
+    public CourseType(String courseName, double courseCost, int total, String remark) {
         this.courseName = courseName;
         this.courseCost = courseCost;
-        this.total = tatal;
+        this.total = total;
+        this.remark = remark;
+    }
+
+    public CourseType(String courseTypeId, String courseName, double courseCost, int total, String remark) {
+        this.courseTypeId = courseTypeId;
+        this.courseName = courseName;
+        this.courseCost = courseCost;
+        this.total = total;
         this.remark = remark;
     }
 
@@ -56,12 +63,12 @@ public class CourseType {
         this.courseCost = courseCost;
     }
 
-    public int getTatal() {
+    public int getTotal() {
         return total;
     }
 
-    public void setTotal(int tatal) {
-        this.total = tatal;
+    public void setTotal(int total) {
+        this.total = total;
     }
 
     public String getRemark() {

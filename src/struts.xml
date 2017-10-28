@@ -103,7 +103,14 @@
         <action name="add"
                 class="com.lanou.action.DepartmentAction"
                 method="add">
-            <result name="success" type="chain">findAll</result>
+            <result name="success" type="chain">findAllDepart</result>
+        </action>
+
+        <!--分页-->
+        <action name="findAllDepart"
+                class="departmentAction"
+                method="findAllDepart">
+            <result name="success">/pages/department/listDepartment.jsp</result>
         </action>
     </package>
 
@@ -118,13 +125,20 @@
             <result name="success">/pages/post/listPost.jsp</result>
         </action>
 
+        <!--分页查询-->
+        <action name="findAllPost"
+                class="postAction"
+                method="findAllPost">
+            <result name="success">/pages/post/listPost.jsp</result>
+        </action>
+
         <!--添加职务-->
         <action name="add"
                 class="com.lanou.action.PostAction"
                 method="add">
             <result name="success" type="chain">findAll</result>
             <result name="input">/pages/error.jsp</result>
-            <result name="error">/pages/error.jsp</result>
+            <result name="error">/pages/post/addOrEditPost.jsp</result>
         </action>
 
         <!--显示部门-->

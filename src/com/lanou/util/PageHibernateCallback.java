@@ -1,4 +1,4 @@
-package com.lanou.util.page;
+package com.lanou.util;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -30,10 +30,13 @@ public class PageHibernateCallback<T> implements HibernateCallback<List<T>> {
         // 通过hql获得Query对象
         Query query = session.createQuery(hql);
 
-        // 设置条件
-        for (int i = 0; i < params.length; i++) {
-            query.setParameter(i, params[i]);
+        if (null != params){
+            // 设置条件
+            for (int i = 0; i < params.length; i++) {
+                query.setParameter(i, params[i]);
+            }
         }
+
         // 分页
         query.setFirstResult(startIndex);
         query.setMaxResults(pageSize);

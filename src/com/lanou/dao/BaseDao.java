@@ -1,5 +1,7 @@
 package com.lanou.dao;
 
+import com.lanou.domain.Department;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -54,4 +56,7 @@ public interface BaseDao<T> {
 
     T get(Class<T> tClass, Serializable id);
 
+    int getTotalRecord(T tClass, String hql, Object[] params);
+
+    List<Department> findAll(T tClass,  String condition, Object[] params, int pageNum, int pageSize);
 }

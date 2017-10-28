@@ -67,6 +67,14 @@ public class Classes {
                 '}';
     }
 
+    public CourseType getCourseType() {
+        return courseType;
+    }
+
+    public void setCourseType(CourseType courseType) {
+        this.courseType = courseType;
+    }
+
     public String getClassId() {
         return classId;
     }

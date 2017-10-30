@@ -31,18 +31,18 @@
             <!-- 执行js，进行返回 -->
             <a href="javascript:void(0)" onclick="window.history.go(-1)"><img
                     src="${pageContext.request.contextPath}/images/button/tuihui.gif"/></a>
-
         </td>
         <td width="3%" align="right"><img src="${pageContext.request.contextPath}/images/tright.gif"/></td>
     </tr>
 </table>
+
+<span style="color: red"><s:actionerror/></span>
 
 <form action="${pageContext.request.contextPath}/department/add.action" method="post">
     <table width="88%" border="0" class="emp_table" style="width:80%;">
         <tr>
             <td>部门名称：</td>
             <td><input type="text" name="depName" value="${param.depName}"/></td>
-
             <td><input type="hidden" name="depId" value="${param.depId}"/></td>
 
         </tr>

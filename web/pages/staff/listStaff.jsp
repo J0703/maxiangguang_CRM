@@ -1,4 +1,5 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -37,7 +38,7 @@
 </table>
 
 <!-- 查询条件：马上查询 -->
-<form id="conditionFormId" action="${pageContext.request.contextPath}/staff/find.action" method="post">
+<form id="conditionFormId" action="${pageContext.request.contextPath}/staff/findAllStaff.action" method="post">
 	<table width="88%" border="0" style="margin: 20px;" >
 	  <tr>
 	    <td width="80px">部门：</td>
@@ -80,7 +81,7 @@
     <td width="10%" align="center">编辑</td>
   </tr>
 
-	<s:iterator var="s" value="staffs">
+	<s:iterator var="s" value="pageBean.data">
 	<tr class="tabtd1">
 		<td align="center">${s.staffName}</td>
 		<td align="center">${s.gender}</td>
@@ -99,21 +100,33 @@
 </table>
 
 
-<%-- 
-<table border="0" cellspacing="0" cellpadding="0" align="center">
-  <tr>
-    <td align="right">
-    	<span>第1/3页</span>
-        <span>
-        	<a href="#">[首页]</a>&nbsp;&nbsp;
-            <a href="#">[上一页]</a>&nbsp;&nbsp;
-            <a href="#">[下一页]</a>&nbsp;&nbsp;
-            <a href="#">[尾页]</a>
+
+ <table border="0" cellspacing="0" cellpadding="0" align="center">
+	 <tr>
+		 <td align="right">
+			 <span>第${pageBean.pageNum}/${pageBean.totalPage}页</span>
+			 <span>
+        	<a href="${pageContext.request.contextPath}/staff/findAllStaff.action?pageNum=0&depId=${depId}&postId=${postId}&staffName=${staffName}">[首页]</a>&nbsp;&nbsp;
+
+            <a href="${pageContext.request.contextPath}
+                /staff/findAllStaff.action?pageNum=${pageBean.pageNum - 1}&depId=${depId}&postId=${postId}&staffName=${staffName}">[上一页]</a>&nbsp;&nbsp;
+
+            <a
+					<c:choose>
+						<c:when test="${pageBean.pageNum >= pageBean.totalPage}">href="#"</c:when>
+						<c:otherwise>href="${pageContext.request.contextPath}
+							/staff/findAllStaff.action?pageNum=${pageBean.pageNum + 1}&depId=${depId}&postId=${postId}&staffName=${staffName}"</c:otherwise>
+					</c:choose>
+			>[下一页]</a>&nbsp;&nbsp;
+
+            <a href="${pageContext.request.contextPath}
+                /staff/findAllStaff.action?pageNum=${pageBean.totalPage}&depId=${depId}&postId=${postId}&staffName=${staffName}">[尾页]</a>
         </span>
-    </td>
-  </tr>
-</table>
---%>
+		 </td>
+	 </tr>
+ </table>
+
+
 
  <script>
 	 $(function () {

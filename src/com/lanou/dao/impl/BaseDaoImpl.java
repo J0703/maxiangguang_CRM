@@ -2,6 +2,8 @@ package com.lanou.dao.impl;
 
 import com.lanou.dao.BaseDao;
 import com.lanou.domain.Department;
+import com.lanou.domain.Post;
+import com.lanou.domain.Staff;
 import com.lanou.util.PageHibernateCallback;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -59,18 +61,16 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
     }
 
     @Override
-    public int getTotalRecord(T tClass, String condition, Object[] params) {
-
-
-        String hql = "select count(d) from " + tClass + " d where 1=1";
-        List<Long> totalRecord;
+    public int getTotalRecord(String hql, Object[] params) {
+        // 定义总页数
+        int totalRecord;
         if (params == null){
-            totalRecord = (List<Long>) this.getHibernateTemplate().find(hql);
+            totalRecord = this.getHibernateTemplate().find(hql).size();
         }else {
-            totalRecord = (List<Long>) this.getHibernateTemplate().find(hql, params);
+            totalRecord = this.getHibernateTemplate().find(hql, params).size();
         }
 
-        return totalRecord != null ? totalRecord.get(0).intValue() : 0;
+        return totalRecord != 0 ? totalRecord : 0;
     }
 
     @Override
@@ -83,6 +83,11 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 
         return this.getHibernateTemplate().execute(
                 new PageHibernateCallback<Department>(hql, params, pageNum, pageSize));
+    }
+
+    @Override
+    public List<T> find(String hql, Object[] params, int pageNum, int pageSize) {
+        return getHibernateTemplate().execute(new PageHibernateCallback<T>(hql, params, (pageNum-1)*pageSize, pageSize));
     }
 
 }

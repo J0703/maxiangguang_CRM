@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by dllo on 17/10/25.
  */
-public interface StaffService {
+public interface StaffService extends BaseService<Staff>{
 
     /**
      *  保存某个对象
@@ -19,14 +19,12 @@ public interface StaffService {
     /**
      *  删除某个对象
      *
-     * @param t 要删除的对象, 必须是持久化状态的对象
      */
     void delete(Staff staff);
 
     /**
      *  更改某个对象
      *
-     * @param t 要更改的对象
      */
     void update(Staff staff);
 

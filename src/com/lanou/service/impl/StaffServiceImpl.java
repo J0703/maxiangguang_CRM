@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by dllo on 17/10/25.
  */
-public class StaffServiceImpl implements StaffService {
+public class StaffServiceImpl extends BaseServiceImpl<Staff> implements StaffService {
 
     private StaffDao staffDao;
     private PostDao postDao;
@@ -28,6 +28,7 @@ public class StaffServiceImpl implements StaffService {
 
         staffDao.save(staff);
     }
+
 
     @Override
     public void delete(Staff staff) {

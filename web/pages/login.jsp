@@ -40,7 +40,7 @@ FONT-SIZE: 12px; COLOR: #4b4b4b; LINE-HEIGHT: 18px; TEXT-DECORATION: none
 		<tr align="center" >
 		 
 			<td class="login_msg" width="400">
-				<form action="${pageContext.request.contextPath}/pages/frame.jsp" method="post">
+				<form action="${pageContext.request.contextPath}/staff/login.action" method="post">
 					
 					<font size="6" color="#ffffff">
 						欢迎使用CRM系统
@@ -52,8 +52,8 @@ FONT-SIZE: 12px; COLOR: #4b4b4b; LINE-HEIGHT: 18px; TEXT-DECORATION: none
 						<s:actionerror/>
 					</font>
 					<br/>
-					用户名：<input type="text" name="loginName" class="msg" value="${staff.loginName}" placeholder="LoginName" autocomplete="off"/><br/><br/>
-					密&nbsp;码：<input type="password" name="loginPwd" class="msg" ${staff.loginPwd} placeholder="Password" oncontextmenu="return false" onpaste="return false"/><br/><br/>
+					用户名：<input type="text" name="loginName" class="msg" value="${staff.loginName}"/><br/><br/>
+					密&nbsp;码：<input type="password" name="loginPwd" class="msg" ${staff.loginPwd}/><br/><br/>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="submit" class="btn" value="登录 " />
 					

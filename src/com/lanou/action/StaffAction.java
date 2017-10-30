@@ -1,6 +1,7 @@
 package com.lanou.action;
 
 import com.lanou.domain.Department;
+import com.lanou.domain.PageBean;
 import com.lanou.domain.Post;
 import com.lanou.domain.Staff;
 import com.lanou.service.DepartmentService;
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,6 +34,7 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
     private String newPassword;
     private String reNewPassword;
 
+    // 高级查询 二级联动参数
     private String postId;
     private String depId;
     private String staffId;
@@ -39,6 +42,11 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
 
     private List<Department> departments;
     private List<Post> posts;
+
+    // 分页
+    private int pageSize = 4;
+    private int pageNum;//当前页
+    private PageBean<Staff> pageBean;
 
 
     @Resource
@@ -211,10 +219,11 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
     }
 
     /**
-     *  编辑员工
+     * 编辑员工
+     *
      * @return
      */
-    public String edit(){
+    public String edit() {
 
         // 给员工设置职务
         Department byId = departmentService.findById(postId);
@@ -253,6 +262,52 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
         return SUCCESS;
     }
 
+    /**
+     * 分页
+     *
+     * @return
+     */
+    public String findAllStaff() {
+
+        System.out.println(postId);
+        System.out.println(staffName);
+        System.out.println(depId);
+        System.out.println("888");
+        System.out.println(staff.getStaffName());
+
+        //
+        if (null == depId && null == postId && null == staff.getStaffName()) {
+
+            pageBean = staffService.findAll(staff, null, null, pageNum, pageSize);
+
+        } else {
+
+            String condition = "";
+            List params = new ArrayList();
+
+            if (!"".equals(depId)) {
+                condition += "and s.post.department.depId = ? ";
+                params.add(depId);
+            }
+            if (!"".equals(postId)) {
+                condition += "and postId =? ";
+                params.add(postId);
+            }
+            if (!"".equals(staff.getStaffName())) {
+                condition += "and staffName like '%" + staff.getStaffName() + "%'";
+            }
+            pageBean = staffService.findAll(staff, condition, params.toArray(), pageNum, pageSize);
+
+        }
+        return SUCCESS;
+    }
+
+    public String findByCondtion() {
+
+
+        return SUCCESS;
+    }
+
 
     @Override
     public Staff getModel() {
@@ -260,6 +315,21 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
         return staff;
     }
 
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public PageBean<Staff> getPageBean() {
+        return pageBean;
+    }
+
+    public void setPageBean(PageBean<Staff> pageBean) {
+        this.pageBean = pageBean;
+    }
 
     public Staff getStaff() {
         return staff;

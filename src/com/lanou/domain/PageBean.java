@@ -13,7 +13,7 @@ public class PageBean<T> {
     private int startIndex; // 开始索引
     private int totalPage; // 总页码数
 
-    private List<T> data ; // 当前页记录
+    private List<T> data; // 当前页记录
 
     public PageBean() {
     }

@@ -102,11 +102,13 @@
           id="staffService">
         <property name="staffDao" ref="staffDao"/>
         <property name="postDao" ref="postDao"/>
+        <property name="baseDao" ref="staffDao"/>
     </bean>
 
     <bean class="com.lanou.service.impl.PostServiceImpl"
           id="postService">
         <property name="postDao" ref="postDao"/>
+        <property name="baseDao" ref="postDao"/>
     </bean>
 
 

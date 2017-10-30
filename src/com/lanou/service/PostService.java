@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by dllo on 17/10/25.
  */
-public interface PostService{
+public interface PostService extends BaseService<Post>{
 
     /**
      *  保存某个对象
@@ -50,8 +50,6 @@ public interface PostService{
 
     List<Post> findByDepId(String depId);
 
-
     Post get(Serializable id);
 
-    PageBean<Post> findAll(int pageNum, int pageSize);
 }

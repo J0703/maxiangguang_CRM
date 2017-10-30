@@ -5,6 +5,7 @@ import com.lanou.domain.PageBean;
 import com.lanou.service.DepartmentService;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -40,8 +41,15 @@ public class DepartmentAction extends ActionSupport implements ModelDriven<Depar
      */
     public String add() {
 
+        // 添加判空
+        if (StringUtils.isBlank(department.getDepName())){
+            addActionError("部门名称不能为空");
+            return ERROR;
+        }
+
         // 查询数据库中是否存在
         Department findDept = departmentService.findById(department.getDepId());
+
 
         // 存在就跟新
         if (null != findDept) {
@@ -67,6 +75,10 @@ public class DepartmentAction extends ActionSupport implements ModelDriven<Depar
         return SUCCESS;
     }
 
+    /**
+     *  分页
+     * @return
+     */
     public String findAllDepart(){
 
         pageBean = departmentService.findAll(pageNum, pageSize);

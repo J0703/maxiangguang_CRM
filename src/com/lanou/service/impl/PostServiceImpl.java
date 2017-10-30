@@ -58,11 +58,7 @@ public class PostServiceImpl extends BaseServiceImpl<Post> implements PostServic
         return postDao.get(Post.class, id);
     }
 
-    @Override
-    public PageBean<Post> findAll(int pageNum, int pageSize) {
 
-        return null;
-    }
 
     public PostDao getPostDao() {
         return postDao;

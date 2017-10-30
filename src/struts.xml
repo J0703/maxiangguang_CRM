@@ -61,7 +61,7 @@
         <action name="add"
                 class="com.lanou.action.StaffAction"
                 method="add">
-            <result name="success" type="chain">findAll</result>
+            <result name="success" type="chain">findAllStaff</result>
             <result name="input">/pages/error.jsp</result>
         </action>
 
@@ -86,6 +86,13 @@
             <result name="input">/pages/error.jsp</result>
         </action>
 
+        <!--分页查询-->
+        <action name="findAllStaff"
+                class="staffAction"
+                method="findAllStaff">
+            <result name="success">/pages/staff/listStaff.jsp</result>
+        </action>
+
     </package>
 
     <package name="department" extends="json-default" namespace="/department">
@@ -104,6 +111,7 @@
                 class="com.lanou.action.DepartmentAction"
                 method="add">
             <result name="success" type="chain">findAllDepart</result>
+            <result name="error">/pages/department/addOrEditDepartment.jsp</result>
         </action>
 
         <!--分页-->

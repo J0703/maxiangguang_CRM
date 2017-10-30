@@ -26,7 +26,7 @@ public class DepartmentDaoImpl extends BaseDaoImpl<Department> implements Depart
     }
 
     @Override
-    public List<Department> findAll(String condition, Object[] params, int startIndex, int pageSize) {
+    public List<Department> findAll(String condition, Object[] params, int pageNum, int pageSize) {
 
         String hql =  "from Department where 1=1 ";
 
@@ -34,7 +34,7 @@ public class DepartmentDaoImpl extends BaseDaoImpl<Department> implements Depart
         hql += null == condition ? "" : condition;
 
         return this.getHibernateTemplate().execute(
-                new PageHibernateCallback<Department>(hql, params, startIndex, pageSize));
+                new PageHibernateCallback<Department>(hql, params, (pageNum - 1) * pageSize, pageSize));
     }
 
 

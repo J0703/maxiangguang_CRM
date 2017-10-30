@@ -56,7 +56,10 @@ public interface BaseDao<T> {
 
     T get(Class<T> tClass, Serializable id);
 
-    int getTotalRecord(T tClass, String hql, Object[] params);
+    int getTotalRecord(String hql, Object[] params);
 
     List<Department> findAll(T tClass,  String condition, Object[] params, int pageNum, int pageSize);
+
+
+    List<T> find(String hql, Object[] params, int pageNum, int pageSize);
 }

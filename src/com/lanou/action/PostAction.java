@@ -51,10 +51,6 @@ public class PostAction extends ActionSupport implements ModelDriven<Post> {
      */
     public String findAll() {
         posts = postService.findAll();
-
-        for (Post post1 : posts) {
-            System.out.println(post1);
-        }
         return SUCCESS;
     }
 
@@ -63,7 +59,7 @@ public class PostAction extends ActionSupport implements ModelDriven<Post> {
      */
     public String findAllPost(){
 
-        pageBean = postService.findAll(pageNum, pageSize);
+        pageBean = postService.findAll(post, null, null, pageNum, pageSize);
 
         return SUCCESS;
     }
@@ -86,9 +82,6 @@ public class PostAction extends ActionSupport implements ModelDriven<Post> {
         System.out.println(departId);
 
         postList = postService.findByDepId(departId);
-        for (Post post1 : postList) {
-            System.out.println(post1);
-        }
 
         return SUCCESS;
     }

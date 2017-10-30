@@ -227,4 +227,12 @@
         </action>
     </package>
 
+    <package name="courseType" extends="struts-default">
+        <action name="add"
+                class="courseTypeAction"
+                method="add">
+            <result name="success">findAllCourseType</result>
+        </action>
+    </package>
+
 </struts>

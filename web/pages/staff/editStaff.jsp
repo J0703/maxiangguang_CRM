@@ -36,6 +36,7 @@
         <td width="3%" align="right"><img src="${pageContext.request.contextPath}/images/tright.gif"/></td>
     </tr>
 </table>
+<span style="color: red">${sessionScope.msg}</span>
 
 <form action="${pageContext.request.contextPath}/staff/edit.action" method="post">
 

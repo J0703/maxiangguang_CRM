@@ -8,9 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
+ *  过滤地址输入
  * Created by dllo on 17/10/27.
  */
-@WebFilter(filterName = "Filter", urlPatterns = "")
+@WebFilter(filterName = "Filter", urlPatterns = "/*")
 public class Filter implements javax.servlet.Filter {
     public void destroy() {
     }

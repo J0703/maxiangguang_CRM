@@ -41,9 +41,6 @@ public class BaseServiceImpl<T> implements BaseService<T> {
         // 查询出总的记录数(没有条件, 参数)
         int totalRecord = baseDao.getTotalRecord(hql, params);
 
-        System.out.println(totalRecord);
-        System.out.println("****");
-
         // 判断当前页是否为0
         if (pageNum == 0) pageNum = 1;
 

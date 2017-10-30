@@ -24,6 +24,7 @@ public class StaffServiceImpl extends BaseServiceImpl<Staff> implements StaffSer
 
         // 密码加密
         String pwd = EncryptUtil.getMD5Value(staff.getLoginPwd());
+
         staff.setLoginPwd(pwd);
 
         staffDao.save(staff);
@@ -135,10 +136,12 @@ public class StaffServiceImpl extends BaseServiceImpl<Staff> implements StaffSer
 
     @Override
     public Staff login(Staff staff) {
+
         String hql = "from Staff where loginName=? and loginPwd=?";
         Object[] params ={staff.getLoginName(), staff.getLoginPwd()};
+
         Staff s = (Staff) getStaffDao().findSingle(hql, params);
-        System.out.println(s);
+
         return s;
     }
 

@@ -6,6 +6,7 @@ import com.lanou.domain.Staff;
 import com.lanou.service.DepartmentService;
 import com.lanou.service.PostService;
 import com.lanou.service.StaffService;
+import com.lanou.util.EncryptUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -43,6 +44,14 @@ public class MainTest {
         for (Department department : all) {
             System.out.println(department);
         }
+
+    }
+
+    @Test
+    public void encrypt(){
+        String pwd = "123";
+        String s = EncryptUtil.getMD5Value(pwd);
+        System.out.println(s);
 
     }
 

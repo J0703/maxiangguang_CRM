@@ -34,7 +34,7 @@
 </head>
 
 <body class="updpwd">
-	<form action="${pageContext.request.contextPath}/editLoginPwd.action" method="post">
+	<form action="${pageContext.request.contextPath}/staff/editLoginPwd.action" method="post">
 		<table style="width: 200px">
 			<tr>
 				<td colspan="2">

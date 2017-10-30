@@ -130,7 +130,7 @@
 											<font color="ffffff">更改密码</font>
 										</a>
 									</td>
-										<td width="55" valign="middle"><a href="${pageContext.request.contextPath}/logout.action" target="_top"><font color="ffffff">重新登录</font></a></td>
+										<td width="55" valign="middle"><a href="${pageContext.request.contextPath}/staff/logout.action" target="_top"><font color="ffffff">重新登录</font></a></td>
 								</tr>
 							</table>
 						</div>

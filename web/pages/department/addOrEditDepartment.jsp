@@ -37,6 +37,7 @@
 </table>
 
 <span style="color: red"><s:actionerror/></span>
+<span style="color: red">${sessionScope.msg}</span>
 
 <form action="${pageContext.request.contextPath}/department/add.action" method="post">
     <table width="88%" border="0" class="emp_table" style="width:80%;">

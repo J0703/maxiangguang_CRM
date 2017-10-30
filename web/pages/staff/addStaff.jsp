@@ -35,6 +35,9 @@
   </tr>
 </table>
 
+<%--显示错误信息--%>
+<span style="color: red">${sessionScope.msg}</span>
+
 <form action="${pageContext.request.contextPath}/staff/add.action" method="post">
 	<table width="88%" border="0" class="emp_table" style="width:80%;">
 	 <tr>

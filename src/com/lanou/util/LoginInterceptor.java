@@ -15,7 +15,6 @@ public class LoginInterceptor extends MethodFilterInterceptor {
         if (null == staff){
             return "login";
         }
-
         return actionInvocation.invoke();
     }
 }

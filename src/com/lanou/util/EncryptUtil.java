@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
+ *  密码加密工具类
  * Created by dllo on 17/10/27.
  */
 public class EncryptUtil {

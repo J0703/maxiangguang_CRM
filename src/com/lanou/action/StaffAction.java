@@ -7,6 +7,7 @@ import com.lanou.domain.Staff;
 import com.lanou.service.DepartmentService;
 import com.lanou.service.PostService;
 import com.lanou.service.StaffService;
+import com.lanou.util.EncryptUtil;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -67,10 +68,14 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
         // 用户表单回填
         ActionContext.getContext().getApplication().put("staff", staff);
 
+        // 密码加密判断
+        String pwd = EncryptUtil.getMD5Value(staff.getLoginPwd());
+        staff.setLoginPwd(pwd);
+
         // 数据库查询
         Staff staff1 = staffService.login(staff);
         if (null != staff1) {
-            ActionContext.getContext().getApplication().put("staff", staff1);
+            ActionContext.getContext().getSession().put("staff", staff1);
             return SUCCESS;
         }
         // 如果没有该用户, 添加错误信息
@@ -103,9 +108,11 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
         Staff staff = (Staff) ActionContext.getContext().getApplication().get("staff");
 
         // 验证旧密码
-        if (staff.getLoginPwd().equals(oldPassword)) {
+        String md5Value = EncryptUtil.getMD5Value(oldPassword);
+
+        if (staff.getLoginPwd().equals(md5Value)) {
             // 调用修改方法
-            staff.setLoginPwd(newPassword);
+            staff.setLoginPwd(EncryptUtil.getMD5Value(newPassword));
             staffService.update(staff);
             return SUCCESS;
         }
@@ -118,10 +125,6 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
      * @return
      */
     public String validateEditLoginPwd() {
-
-        System.out.println(oldPassword);
-        System.out.println(newPassword);
-        System.out.println(reNewPassword);
 
         if (StringUtils.isBlank(oldPassword)) {
             addActionError("旧密码不能为空");
@@ -168,6 +171,7 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
     public String add() {
 
         Post post = postService.findById(postId);
+
         staff.setPost(post);
 
         staffService.save(staff);
@@ -237,7 +241,6 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
         System.out.println(byStaffId);
         System.out.println(staff);
 
-
         // 执行修改
         staffService.update(staff);
 
@@ -263,38 +266,37 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
     }
 
     /**
-     * 分页
+     * 分页,  查询所有 和 条件查询
      *
      * @return
      */
     public String findAllStaff() {
 
-        System.out.println(postId);
-        System.out.println(staffName);
-        System.out.println(depId);
-        System.out.println("888");
-        System.out.println(staff.getStaffName());
-
-        //
+        // 查询所有
         if (null == depId && null == postId && null == staff.getStaffName()) {
 
             pageBean = staffService.findAll(staff, null, null, pageNum, pageSize);
 
         } else {
 
+            // 条件查询
+
             String condition = "";
             List params = new ArrayList();
 
+            // depId为空,进行参数拼接
             if (!"".equals(depId)) {
                 condition += "and s.post.department.depId = ? ";
                 params.add(depId);
             }
+            // postId为空,进行参数拼接
             if (!"".equals(postId)) {
-                condition += "and postId =? ";
+                condition += "and s.post.postId =? ";
                 params.add(postId);
             }
+            // staffName为空,进行参数拼接
             if (!"".equals(staff.getStaffName())) {
-                condition += "and staffName like '%" + staff.getStaffName() + "%'";
+                condition += "and s.staffName like '%" + staff.getStaffName() + "%'";
             }
             pageBean = staffService.findAll(staff, condition, params.toArray(), pageNum, pageSize);
 

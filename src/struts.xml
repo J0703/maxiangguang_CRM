@@ -10,22 +10,33 @@
 
     <!--将struts2中的对象交给spring完成-->
     <constant name="struts.objectFactory" value="spring"/>
-    
-    <package name="common" extends="struts-default">
-        <!--自定义拦截器-->
-        <interceptors>
-            <interceptor name="loginInterceptor" class="com.lanou.util.LoginInterceptor"/>
-            <interceptor-stack name="myInterceptorStack">
-                <interceptor-ref name="loginInterceptor"/>
-                <interceptor-ref name="defaultStack"/>
-            </interceptor-stack>
-        </interceptors>
-    </package>
 
 
     <package name="staff" extends="json-default" namespace="/staff">
+        <!--自定义拦截器-->
+        <interceptors>
+            <!--登录拦截-->
+            <interceptor name="loginInterceptor" class="com.lanou.util.LoginInterceptor">
+                <param name="excludeMethods">login</param>
+            </interceptor>
+
+            <!--HRCheck-->
+            <interceptor name="HRCheck" class="com.lanou.util.HRCheck">
+                <param name="includeMethods">add,prepareEdit,edit</param>
+            </interceptor>
+
+            <!--自定义拦截器栈-->
+            <interceptor-stack name="myInterceptorStack">
+                <interceptor-ref name="loginInterceptor"/>
+                <interceptor-ref name="HRCheck"/>
+                <!--引入系统拦截器-->
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+
         <!--拦截-->
-        <default-interceptor-ref name="modelDrivenStack"/>
+        <default-interceptor-ref name="myInterceptorStack"/>
+
         <!--登录-->
         <action name="login"
                 class="com.lanou.action.StaffAction"
@@ -39,7 +50,7 @@
         <action name="editLoginPwd"
                 class="com.lanou.action.StaffAction"
                 method="editLoginPwd">
-            <result name="success">/pages/login.jsp</result>
+            <result name="success" type="redirect">/pages/login.jsp</result>
             <result name="error">/pages/staff/updPwd.jsp</result>
             <result name="input">/pages/error.jsp</result>
         </action>
@@ -48,9 +59,10 @@
         <action name="logout"
                 class="com.lanou.action.StaffAction"
                 method="logout">
-            <result name="success">/pages/login.jsp</result>
+            <result name="success" type="redirect">/pages/login.jsp</result>
         </action>
 
+        <!--查询所有-->
         <action name="findAll"
                 class="com.lanou.action.StaffAction"
                 method="findAll">
@@ -63,6 +75,7 @@
                 method="add">
             <result name="success" type="chain">findAllStaff</result>
             <result name="input">/pages/error.jsp</result>
+            <result name="error">/pages/frame.jsp</result>
         </action>
 
         <!--编辑前的准备-->
@@ -70,13 +83,15 @@
                 class="staffAction"
                 method="prepareEdit">
             <result name="success">/pages/staff/editStaff.jsp</result>
+            <result name="error">/pages/staff/editStaff.jsp</result>
         </action>
 
         <!--编辑员工-->
         <action name="edit"
                 class="staffAction"
                 method="edit">
-            <result name="success" type="chain">findAll</result>
+            <result name="success" type="chain">findAllStaff</result>
+            <result name="error">/pages/staff/editStaff.jsp</result>
         </action>
 
         <action name="find"
@@ -97,7 +112,29 @@
 
     <package name="department" extends="json-default" namespace="/department">
 
-        <default-interceptor-ref name="modelDrivenStack"/>
+        <!--自定义拦截器-->
+        <interceptors>
+            <!--登录拦截-->
+            <interceptor name="loginInterceptor" class="com.lanou.util.LoginInterceptor">
+                <param name="excludeMethods">login</param>
+            </interceptor>
+
+            <!--HRCheck-->
+            <interceptor name="HRCheck" class="com.lanou.util.HRCheck">
+                <param name="includeMethods">add,prepareEdit,edit</param>
+            </interceptor>
+
+            <!--自定义拦截器栈-->
+            <interceptor-stack name="myInterceptorStack">
+                <interceptor-ref name="loginInterceptor"/>
+                <interceptor-ref name="HRCheck"/>
+                <!--引入系统拦截器-->
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <!--拦截-->
+        <default-interceptor-ref name="myInterceptorStack"/>
 
         <!--查询所有部门-->
         <action name="findAll"
@@ -124,7 +161,29 @@
 
     <package name="post" extends="json-default" namespace="/post">
 
-        <default-interceptor-ref name="modelDrivenStack"/>
+        <!--自定义拦截器-->
+        <interceptors>
+            <!--登录拦截-->
+            <interceptor name="loginInterceptor" class="com.lanou.util.LoginInterceptor">
+                <param name="excludeMethods">login</param>
+            </interceptor>
+
+            <!--HRCheck-->
+            <interceptor name="HRCheck" class="com.lanou.util.HRCheck">
+                <param name="includeMethods">add,prepareEdit,edit</param>
+            </interceptor>
+
+            <!--自定义拦截器栈-->
+            <interceptor-stack name="myInterceptorStack">
+                <interceptor-ref name="loginInterceptor"/>
+                <interceptor-ref name="HRCheck"/>
+                <!--引入系统拦截器-->
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <!--拦截-->
+        <default-interceptor-ref name="myInterceptorStack"/>
 
         <!--查询所有职务-->
         <action name="findAll"
@@ -144,7 +203,7 @@
         <action name="add"
                 class="com.lanou.action.PostAction"
                 method="add">
-            <result name="success" type="chain">findAll</result>
+            <result name="success" type="chain">findAllPost</result>
             <result name="input">/pages/error.jsp</result>
             <result name="error">/pages/post/addOrEditPost.jsp</result>
         </action>

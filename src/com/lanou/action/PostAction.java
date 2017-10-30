@@ -87,7 +87,7 @@ public class PostAction extends ActionSupport implements ModelDriven<Post> {
     }
 
     /**
-     * 添加和编辑
+     * 添加 和 编辑
      *
      * @return
      */
@@ -99,11 +99,13 @@ public class PostAction extends ActionSupport implements ModelDriven<Post> {
         }
 
         // 根据departId查询部门
-
         Department depart = departmentService.findById(departId);
 
+        System.out.println(post.getPostId());
+        System.out.println("******");
+
         // 如果postId为空, 保存
-        if (post.getPostId() == null) {
+        if ("".equals(post.getPostId())) {
 
             post.setDepartment(depart);
             postService.save(post);

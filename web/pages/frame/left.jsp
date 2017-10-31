@@ -22,8 +22,8 @@
 		d.add('010203','0102','学生流失情况','${pageContext.request.contextPath}/pages/runoff/listRunoff.jsp','','right');		
 		d.add('0103','01','教研部');
 		<%-- 班级前缀和包结构命名：classesm ，其他命名class --%>
-		d.add('010301','0103','班级管理','${pageContext.request.contextPath}/pages/classesm/listClass.jsp','','right');
-		d.add('010302','0103','课程类别','${pageContext.request.contextPath}/pages/coursetype/listCourse.jsp','','right');
+		d.add('010301','0103','班级管理','${pageContext.request.contextPath}/classes/findAll.action','','right');
+		d.add('010302','0103','课程类别','${pageContext.request.contextPath}/course/findAll.action','','right');
 		d.add('0104','01','就业部');
 		d.add('010401','0104','就业情况','${pageContext.request.contextPath}/pages/graduate/listGraduate.jsp','','right');
 		d.add('0105','01','人力资源部');

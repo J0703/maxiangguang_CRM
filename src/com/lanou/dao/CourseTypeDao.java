@@ -7,4 +7,6 @@ import com.lanou.domain.CourseType;
  */
 public interface CourseTypeDao extends BaseDao<CourseType> {
 
+
+
 }

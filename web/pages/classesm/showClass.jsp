@@ -36,27 +36,27 @@
 <table width="88%" border="0" class="emp_table" style="width:80%;">
   <tr>
     <td width="10%">班级名称：</td>
-    <td width="20%">J161001期</td>
+    <td width="20%">${classes.className}</td>
     <td width="8%">所属类别：</td>
-    <td width="62%">JavaEE</td>
+    <td width="62%">${classes.courseType.courseName}</td>
   </tr>
   <tr>
     <td>开课时间：</td>
-    <td>2016-10-10</td>
+    <td>${classes.beginTime}</td>
     <td>结业时间：</td>
-    <td>2016-11-1</td>
+    <td>${classes.endTime}</td>
   </tr>
   <tr>
     <td>学生总数：</td>
-    <td>1 </td>
+    <td>${classes.totalCount}</td>
     <td>升级数：</td>
-    <td>2</td>
+    <td>${classes.upgradeCount}</td>
   </tr>
   <tr>
     <td>转班数：</td>
-    <td>0 </td>
+    <td>${classes.changeCount}</td>
     <td>退费数：</td>
-    <td>2</td>
+    <td>${classes.runoffCount}</td>
   </tr>
   <tr>
     <td>其他说明：</td>
@@ -66,7 +66,7 @@
   </tr>
   <tr>
     <td colspan="4">
-    	<textarea name="remark" cols="60" rows="10" id="remark"></textarea>
+    	<textarea name="remark" cols="60" rows="10" id="remark">${classes.remark}</textarea>
     </td>
   </tr>
   <tr>

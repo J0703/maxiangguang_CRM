@@ -51,8 +51,8 @@
                 class="com.lanou.action.StaffAction"
                 method="editLoginPwd">
             <result name="success" type="redirect">/pages/login.jsp</result>
+            <result name="input">/pages/staff/updPwd.jsp</result>
             <result name="error">/pages/staff/updPwd.jsp</result>
-            <result name="input">/pages/error.jsp</result>
         </action>
 
         <!--退出登录-->
@@ -73,7 +73,7 @@
         <action name="add"
                 class="com.lanou.action.StaffAction"
                 method="add">
-            <result name="success" type="chain">findAllStaff</result>
+            <result name="success" type="redirectAction">findAllStaff</result>
             <result name="input">/pages/error.jsp</result>
             <result name="error">/pages/frame.jsp</result>
         </action>
@@ -147,7 +147,7 @@
         <action name="add"
                 class="com.lanou.action.DepartmentAction"
                 method="add">
-            <result name="success" type="chain">findAllDepart</result>
+            <result name="success" type="redirectAction">findAllDepart</result>
             <result name="error">/pages/department/addOrEditDepartment.jsp</result>
         </action>
 
@@ -203,7 +203,7 @@
         <action name="add"
                 class="com.lanou.action.PostAction"
                 method="add">
-            <result name="success" type="chain">findAllPost</result>
+            <result name="success" type="redirectAction">findAllPost</result>
             <result name="input">/pages/error.jsp</result>
             <result name="error">/pages/post/addOrEditPost.jsp</result>
         </action>
@@ -227,11 +227,112 @@
         </action>
     </package>
 
-    <package name="courseType" extends="struts-default">
+    <!--课程-->
+    <package name="courseType" extends="struts-default" namespace="/course">
+        <!--添加课程-->
         <action name="add"
                 class="courseTypeAction"
                 method="add">
-            <result name="success">findAllCourseType</result>
+            <result name="success" type="redirectAction">findAll</result>
+            <result name="error">/pages/coursetype/addOrEditCourse.jsp</result>
+            <result name="input">/pages/coursetype/addOrEditCourse.jsp</result>
+        </action>
+
+        <!--查询所有课程-->
+        <action name="findAll"
+                class="courseTypeAction"
+                method="findAll">
+            <result name="success">/pages/coursetype/listCourse.jsp</result>
+        </action>
+
+    </package>
+
+    <!--班级-->
+    <package name="classes" extends="struts-default" namespace="/classes">
+
+        <interceptors>
+            <interceptor name="teacherCheck" class="com.lanou.util.TeacherCheck">
+                <param name="includeMethods">upload,add</param>
+            </interceptor>
+            <interceptor-stack name="myInterceptorStack">
+                <interceptor-ref name="teacherCheck"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="myInterceptorStack"/>
+
+        <!--查询所有班级-->
+        <action name="findAll"
+                class="classesAction"
+                method="findAll">
+            <result name="success">/pages/classesm/listClass.jsp</result>
+        </action>
+
+        <!--添加和修改班级-->
+        <action name="add"
+                class="classesAction"
+                method="add">
+            <result name="success" type="redirectAction">findAll</result>
+            <result name="error">/pages/classesm/addOrEditClass.jsp</result>
+            <result name="input">/pages/classesm/addOrEditClass.jsp</result>
+        </action>
+
+        <!--查询课程-->
+        <action name="showCourse"
+                class="classesAction"
+                method="showCourse">
+            <result name="success">/pages/classesm/addOrEditClass.jsp</result>
+        </action>
+
+        <!--显示班级-->
+        <action name="showClasses"
+                class="classesAction"
+                method="showClasses">
+            <result name="success">/pages/classesm/showClass.jsp</result>
+        </action>
+
+        <!--上传准备-->
+        <action name="preparedUpload"
+                class="classesAction"
+                method="preparedUpload">
+            <result name="success">/pages/classesm/uploadClass.jsp</result>
+        </action>
+
+        <!--上传-->
+        <action name="upload"
+                class="classesAction"
+                method="upload">
+            <!--重写默认拦截器栈, 修改默认拦截器栈中的某个拦截器的属性-->
+            <interceptor-ref name="defaultStack">
+                <!--重新设置上传的文件大小限制-->
+                <param name="fileUpload.maximumSize">10485760</param>
+                <!--重新设置上传文件的后缀名-->
+                <param name="fileUpload.allowedExtensions">.png,.jpg,.jpeg</param>
+            </interceptor-ref>
+            <result name="input">/pages/error.jsp</result>
+        </action>
+
+        <!--下载-->
+        <action name="download"
+                class="classesAction"
+                method="download">
+            <!--出错界面-->
+            <result name="input">/pages/error.jsp</result>
+            <!--文件下载的type的对应stream-->
+            <result name="success" type="stream">
+
+                <!--动作类中输入流的属性名-->
+                <param name="inputStream">inputStream</param>
+
+                <!--指定浏览器以何种形式下载, 以及文件名称(以附件的形式下载)-->
+                <param name="contentDisposition">attachment;filename=${fileName}</param>
+
+                <!--指定下载的文件的 MINE 类型-->
+                <param name="contentType">application/octet-stream</param>
+
+            </result>
+
         </action>
     </package>
 

@@ -4,10 +4,10 @@ package com.lanou.domain;
  * Created by dllo on 17/10/27.
  */
 public class CourseType {
-    private String courseTypeId;
+    private String courseId;
     private String courseName;
-    private double courseCost;
-    private int total;
+    private double courseCost;//学费
+    private int total;// 学时
     private String remark;
 
     public CourseType() {
@@ -20,8 +20,8 @@ public class CourseType {
         this.remark = remark;
     }
 
-    public CourseType(String courseTypeId, String courseName, double courseCost, int total, String remark) {
-        this.courseTypeId = courseTypeId;
+    public CourseType(String courseId, String courseName, double courseCost, int total, String remark) {
+        this.courseId = courseId;
         this.courseName = courseName;
         this.courseCost = courseCost;
         this.total = total;
@@ -31,7 +31,7 @@ public class CourseType {
     @Override
     public String toString() {
         return "Classes{" +
-                "courseTypeId='" + courseTypeId + '\'' +
+                "courseTypeId='" + courseId + '\'' +
                 ", courseName='" + courseName + '\'' +
                 ", courseCost=" + courseCost +
                 ", total=" + total +
@@ -39,12 +39,12 @@ public class CourseType {
                 '}';
     }
 
-    public String getCourseTypeId() {
-        return courseTypeId;
+    public String getCourseId() {
+        return courseId;
     }
 
-    public void setCourseTypeId(String courseTypeId) {
-        this.courseTypeId = courseTypeId;
+    public void setCourseId(String courseTypeId) {
+        this.courseId = courseTypeId;
     }
 
     public String getCourseName() {

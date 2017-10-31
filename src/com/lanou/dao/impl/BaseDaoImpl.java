@@ -6,6 +6,7 @@ import com.lanou.domain.Post;
 import com.lanou.domain.Staff;
 import com.lanou.util.PageHibernateCallback;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
@@ -89,5 +90,16 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
     public List<T> find(String hql, Object[] params, int pageNum, int pageSize) {
         return getHibernateTemplate().execute(new PageHibernateCallback<T>(hql, params, (pageNum-1)*pageSize, pageSize));
     }
+
+//    @Override
+//    public void update(String hql, Object[] params) {
+//        SQLQuery sqlQuery = currentSession().createSQLQuery(hql);
+//
+//        for (int i = 0; i < params.length; i++) {
+//            sqlQuery.setParameter(i, params[i]);
+//        }
+//
+//        sqlQuery.executeUpdate();
+//    }
 
 }

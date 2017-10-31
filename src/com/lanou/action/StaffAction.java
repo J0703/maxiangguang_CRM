@@ -105,10 +105,15 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
      */
     public String editLoginPwd() {
         // 获得staff
-        Staff staff = (Staff) ActionContext.getContext().getApplication().get("staff");
+        Staff staff = (Staff) ActionContext.getContext().getSession().get("staff");
 
         // 验证旧密码
         String md5Value = EncryptUtil.getMD5Value(oldPassword);
+
+        if (!staff.getLoginPwd().equals(md5Value)){
+            addActionError("旧密码不正确");
+            return ERROR;
+        }
 
         if (staff.getLoginPwd().equals(md5Value)) {
             // 调用修改方法
@@ -301,12 +306,6 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
             pageBean = staffService.findAll(staff, condition, params.toArray(), pageNum, pageSize);
 
         }
-        return SUCCESS;
-    }
-
-    public String findByCondtion() {
-
-
         return SUCCESS;
     }
 

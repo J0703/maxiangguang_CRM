@@ -3,7 +3,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     <class name="com.lanou.domain.CourseType">
-        <id name="courseTypeId" length="32">
+        <id name="courseId" length="32">
             <generator class="uuid"/>
         </id>
         <property name="courseName"/>

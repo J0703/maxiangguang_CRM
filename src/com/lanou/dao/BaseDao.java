@@ -62,4 +62,7 @@ public interface BaseDao<T> {
 
 
     List<T> find(String hql, Object[] params, int pageNum, int pageSize);
+
+
+//    void update(String hql, Object[] objects);
 }

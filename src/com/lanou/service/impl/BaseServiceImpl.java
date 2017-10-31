@@ -1,12 +1,10 @@
 package com.lanou.service.impl;
 
 import com.lanou.dao.BaseDao;
-import com.lanou.domain.Department;
-import com.lanou.domain.PageBean;
-import com.lanou.domain.Post;
-import com.lanou.domain.Staff;
+import com.lanou.domain.*;
 import com.lanou.service.BaseService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,6 +28,12 @@ public class BaseServiceImpl<T> implements BaseService<T> {
         }
         if (tClass instanceof Staff){
             hql += "from Staff s where 1 = 1 ";
+        }
+        if (tClass instanceof CourseType){
+            hql += "from CourseType where 1 = 1 ";
+        }
+        if (tClass instanceof Classes){
+            hql += "from Classes where 1 = 1 ";
         }
 
 
@@ -58,6 +62,38 @@ public class BaseServiceImpl<T> implements BaseService<T> {
         return pageBean;
 
     }
+
+//    @Override
+//    public void update(T classes) {
+//        String hql = "";
+//        List params = new ArrayList();
+//
+//        if (classes instanceof Classes){
+//            hql = "update Classes set classesName=?, " +
+//                    "beginTime=?, endTime=?,status=?," +
+//                    "totalCount=?,upgradeCount=?,changeCount=?" +
+//                    "runoffCount=?,remark=?,uploadTime=?," +
+//                    "uploadPath=?,uploadFilename=? where classesId="+((Classes) classes).getClassId();
+//
+//            params.add(0, ((Classes) classes).getClassName());
+//            params.add(1, ((Classes) classes).getBeginTime());
+//            params.add(2, ((Classes) classes).getEndTime());
+//            params.add(3, ((Classes) classes).getStatus());
+//            params.add(4, ((Classes) classes).getTotalCount());
+//            params.add(5, ((Classes) classes).getUpgradeCount());
+//            params.add(6, ((Classes) classes).getChangeCount());
+//            params.add(7, ((Classes) classes).getRunoffCount());
+//            params.add(8, ((Classes) classes).getRemark());
+//            params.add(9, ((Classes) classes).getUploadTime());
+//            params.add(10, ((Classes) classes).getUploadPath());
+//            params.add(11, ((Classes) classes).getUploadFilename());
+//
+//        }
+//        Object[] objects = params.toArray();
+//
+//        baseDao.update(hql, objects);
+//
+//    }
 
     private int getTotalPage(int pageSize, int totalRecord) {
 

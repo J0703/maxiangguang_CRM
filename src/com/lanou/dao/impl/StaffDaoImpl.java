@@ -5,8 +5,6 @@ import com.lanou.domain.Staff;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
-import java.util.List;
-
 /**
  * Created by dllo on 17/10/25.
  */
@@ -31,14 +29,4 @@ public class StaffDaoImpl extends BaseDaoImpl<Staff> implements StaffDao {
 
     }
 
-//    @Override
-//    public List<Staff> find(String hql, Object[] params) {
-//        Session session = currentSession();
-//        SQLQuery sqlQuery = session.createSQLQuery(hql);
-//        for (int i = 0; i < params.length; i++) {
-//            sqlQuery.setString(i, (String) params[i]);
-//        }
-//
-//        sqlQuery.
-//    }
 }

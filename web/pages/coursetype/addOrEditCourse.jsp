@@ -1,3 +1,4 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -30,18 +31,22 @@
   </tr>
 </table>
 
-<form  action="/crm2/coursetype/courseTypeAction_addOrEdit.action" method="post">
-	
+<span style="color: red"><s:actionerror/></span>
+
+<form  action="${pageContext.request.contextPath}/course/add.action" method="post">
+
+	<input type="hidden" name="courseId" value="${param.courseId}">
+
 	<table width="88%" border="0" class="emp_table" style="width:80%;">
 	  <tr>
 	    <td width="10%">课程类别：</td>
-	    <td width="20%"><input type="text" name="courseName" value="JavaEE" /></td>
+	    <td width="20%"><input type="text" name="courseName" value="${param.courseName}" /></td>
 	    <td width="8%">总学时：</td>
-	    <td width="62%"><input type="text" name="total" value="1000" /></td>
+	    <td width="62%"><input type="text" name="total" value="${param.total}" /></td>
 	  </tr>
 	  <tr>
 	    <td>课程费用：</td>
-	    <td><input type="text" name="courseCost" value="3000.0"/></td>
+	    <td><input type="text" name="courseCost" value="${param.courseCost}"/></td>
 	    <td></td>
 	    <td></td>
 	  </tr>
@@ -52,7 +57,7 @@
 	    <td>&nbsp;</td>
 	  </tr>
 	  <tr>
-	    <td colspan="4"><textarea name="remark" cols="60" rows="10" ></textarea></td>
+	    <td colspan="4"><textarea name="remark" cols="60" rows="10" >${param.remark}</textarea></td>
 	  </tr>
 	</table>
 </form>

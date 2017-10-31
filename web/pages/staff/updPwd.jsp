@@ -23,12 +23,14 @@
 		}
 	</style>
 	<script  type="text/javascript">
-		function closeWindow(flag){
-			if(flag == 'change'){
-				//alert('修改完毕');
+		window.onload = function () {
+			function closeWindow(flag){
+				if(flag == 'change'){
+					//alert('修改完毕');
+				}
+				parent.window.opener = null;
+				parent.close();
 			}
-			parent.window.opener = null;
-			parent.close();
 		}
 	</script>
 </head>
@@ -60,7 +62,7 @@
 				<td colspan="2">
 					<input type="submit"  value="修改" class="login_btn"/>
 
-					<button type="reset" value="关闭" class="login_btn" onclick="closeWindow()">关闭</button>
+					<button type="reset" value="关闭" class="login_btn" onclick="closeWindow(true)">关闭</button>
 
 				</td>
 			</tr>

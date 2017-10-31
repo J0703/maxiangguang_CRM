@@ -8,4 +8,9 @@ import com.lanou.domain.Classes;
 public interface ClassesService extends BaseService<Classes> {
 
 
+    void save(Classes classes);
+
+    void update(Classes classes);
+
+    Classes findById(String classId);
 }

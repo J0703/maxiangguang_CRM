@@ -7,4 +7,5 @@ import com.lanou.domain.Classes;
  */
 public interface ClassesDao extends BaseDao<Classes> {
 
+    void update(Classes classes);
 }

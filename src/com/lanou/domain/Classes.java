@@ -1,26 +1,26 @@
 package com.lanou.domain;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by dllo on 17/10/27.
  */
 public class Classes {
 
-    private String classId;
-    private String className;
-    private Date beginTime;
-    private Date endTime;
-    private String status;
-    private int totalCount;
-    private int upgradeCount;
-    private int changeCount;
-    private int runoffCount;
-    private String remark;
-    private Date uploadTime;
-    private String uploadPath;
-    private String uploadFilename;
-    private CourseType courseType;
+    private String classId;//主键id
+    private String className;//班级名称
+    private Date beginTime;//开始时间
+    private Date endTime;//结束时间
+    private String status;//状态
+    private int totalCount;//学生总数
+    private int upgradeCount;//升学数
+    private int changeCount;//换班数
+    private int runoffCount;//辍学数
+    private String remark;//描述
+    private Date uploadTime;//上传时间
+    private String uploadPath;//上传参数
+    private String uploadFilename;//长传文件名
+    private CourseType courseType;//课程类型
 
     public Classes() {
     }

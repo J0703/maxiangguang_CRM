@@ -10,6 +10,6 @@ public interface BaseService<T> {
 
     PageBean<T> findAll(T tClass, String condition, Object[] params, int pageNum, int pageSize);
 
-    
 
+//    void update(T tClass);
 }

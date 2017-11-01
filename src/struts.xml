@@ -12,16 +12,21 @@
     <constant name="struts.objectFactory" value="spring"/>
 
 
-    <package name="staff" extends="json-default" namespace="/staff">
+    <package name="common" extends="json-default">
         <!--自定义拦截器-->
         <interceptors>
             <!--登录拦截-->
-            <interceptor name="loginInterceptor" class="com.lanou.util.LoginInterceptor">
+            <interceptor name="loginInterceptor" class="com.lanou.common.util.LoginInterceptor">
                 <param name="excludeMethods">login</param>
             </interceptor>
 
+            <!--教研部检查-->
+            <interceptor name="teacherCheck" class="com.lanou.eduction.util.TeacherCheck">
+                <param name="includeMethods">upload,addCourse,addClass,preparedUpload</param>
+            </interceptor>
+
             <!--HRCheck-->
-            <interceptor name="HRCheck" class="com.lanou.util.HRCheck">
+            <interceptor name="HRCheck" class="com.lanou.hr.util.HRCheck">
                 <param name="includeMethods">add,prepareEdit,edit</param>
             </interceptor>
 
@@ -29,6 +34,7 @@
             <interceptor-stack name="myInterceptorStack">
                 <interceptor-ref name="loginInterceptor"/>
                 <interceptor-ref name="HRCheck"/>
+                <interceptor-ref name="teacherCheck"/>
                 <!--引入系统拦截器-->
                 <interceptor-ref name="defaultStack"/>
             </interceptor-stack>
@@ -37,9 +43,20 @@
         <!--拦截-->
         <default-interceptor-ref name="myInterceptorStack"/>
 
+        <!--公共结果集-->
+        <global-results>
+            <result name="error">/pages/error.jsp</result>
+            <result name="login">/pages/login.jsp</result>
+        </global-results>
+
+    </package>
+
+
+    <package name="staff" extends="common" namespace="/staff">
+
         <!--登录-->
         <action name="login"
-                class="com.lanou.action.StaffAction"
+                class="com.lanou.hr.action.StaffAction"
                 method="login">
             <result name="success">/pages/frame.jsp</result>
             <result name="error">/pages/login.jsp</result>
@@ -48,7 +65,7 @@
 
         <!--修改密码-->
         <action name="editLoginPwd"
-                class="com.lanou.action.StaffAction"
+                class="com.lanou.hr.action.StaffAction"
                 method="editLoginPwd">
             <result name="success" type="redirect">/pages/login.jsp</result>
             <result name="input">/pages/staff/updPwd.jsp</result>
@@ -57,21 +74,21 @@
 
         <!--退出登录-->
         <action name="logout"
-                class="com.lanou.action.StaffAction"
+                class="com.lanou.hr.action.StaffAction"
                 method="logout">
             <result name="success" type="redirect">/pages/login.jsp</result>
         </action>
 
         <!--查询所有-->
         <action name="findAll"
-                class="com.lanou.action.StaffAction"
+                class="com.lanou.hr.action.StaffAction"
                 method="findAll">
             <result name="success">/pages/staff/listStaff.jsp</result>
         </action>
 
         <!--添加员工-->
         <action name="add"
-                class="com.lanou.action.StaffAction"
+                class="com.lanou.hr.action.StaffAction"
                 method="add">
             <result name="success" type="redirectAction">findAllStaff</result>
             <result name="input">/pages/error.jsp</result>
@@ -110,45 +127,22 @@
 
     </package>
 
-    <package name="department" extends="json-default" namespace="/department">
-
-        <!--自定义拦截器-->
-        <interceptors>
-            <!--登录拦截-->
-            <interceptor name="loginInterceptor" class="com.lanou.util.LoginInterceptor">
-                <param name="excludeMethods">login</param>
-            </interceptor>
-
-            <!--HRCheck-->
-            <interceptor name="HRCheck" class="com.lanou.util.HRCheck">
-                <param name="includeMethods">add,prepareEdit,edit</param>
-            </interceptor>
-
-            <!--自定义拦截器栈-->
-            <interceptor-stack name="myInterceptorStack">
-                <interceptor-ref name="loginInterceptor"/>
-                <interceptor-ref name="HRCheck"/>
-                <!--引入系统拦截器-->
-                <interceptor-ref name="defaultStack"/>
-            </interceptor-stack>
-        </interceptors>
-
-        <!--拦截-->
-        <default-interceptor-ref name="myInterceptorStack"/>
+    <package name="department" extends="common" namespace="/department">
 
         <!--查询所有部门-->
         <action name="findAll"
-                class="com.lanou.action.DepartmentAction"
+                class="com.lanou.hr.action.DepartmentAction"
                 method="findAll">
             <result name="success">/pages/department/listDepartment.jsp</result>
         </action>
 
         <!--添加部门-->
         <action name="add"
-                class="com.lanou.action.DepartmentAction"
+                class="com.lanou.hr.action.DepartmentAction"
                 method="add">
             <result name="success" type="redirectAction">findAllDepart</result>
             <result name="error">/pages/department/addOrEditDepartment.jsp</result>
+            <result name="input">/pages/department/addOrEditDepartment.jsp</result>
         </action>
 
         <!--分页-->
@@ -156,38 +150,16 @@
                 class="departmentAction"
                 method="findAllDepart">
             <result name="success">/pages/department/listDepartment.jsp</result>
+            <result name="input">/pages/login.jsp</result>
+            <result name="error">/pages/login.jsp</result>
         </action>
     </package>
 
-    <package name="post" extends="json-default" namespace="/post">
-
-        <!--自定义拦截器-->
-        <interceptors>
-            <!--登录拦截-->
-            <interceptor name="loginInterceptor" class="com.lanou.util.LoginInterceptor">
-                <param name="excludeMethods">login</param>
-            </interceptor>
-
-            <!--HRCheck-->
-            <interceptor name="HRCheck" class="com.lanou.util.HRCheck">
-                <param name="includeMethods">add,prepareEdit,edit</param>
-            </interceptor>
-
-            <!--自定义拦截器栈-->
-            <interceptor-stack name="myInterceptorStack">
-                <interceptor-ref name="loginInterceptor"/>
-                <interceptor-ref name="HRCheck"/>
-                <!--引入系统拦截器-->
-                <interceptor-ref name="defaultStack"/>
-            </interceptor-stack>
-        </interceptors>
-
-        <!--拦截-->
-        <default-interceptor-ref name="myInterceptorStack"/>
+    <package name="post" extends="common" namespace="/post">
 
         <!--查询所有职务-->
         <action name="findAll"
-                class="com.lanou.action.PostAction"
+                class="com.lanou.hr.action.PostAction"
                 method="findAll">
             <result name="success">/pages/post/listPost.jsp</result>
         </action>
@@ -197,11 +169,12 @@
                 class="postAction"
                 method="findAllPost">
             <result name="success">/pages/post/listPost.jsp</result>
+            <result name="input">/pages/login.jsp</result>
         </action>
 
         <!--添加职务-->
         <action name="add"
-                class="com.lanou.action.PostAction"
+                class="com.lanou.hr.action.PostAction"
                 method="add">
             <result name="success" type="redirectAction">findAllPost</result>
             <result name="input">/pages/error.jsp</result>
@@ -210,7 +183,7 @@
 
         <!--显示部门-->
         <action name="showDepart"
-                class="com.lanou.action.PostAction"
+                class="com.lanou.hr.action.PostAction"
                 method="showDepart">
             <result name="success" type="json">
                 <param name="root">departmentList</param>
@@ -219,7 +192,7 @@
 
         <!--显示职务-->
         <action name="showPost"
-                class="com.lanou.action.PostAction"
+                class="com.lanou.hr.action.PostAction"
                 method="showPost">
             <result name="success" type="json">
                 <param name="root">postList</param>
@@ -228,11 +201,16 @@
     </package>
 
     <!--课程-->
-    <package name="courseType" extends="struts-default" namespace="/course">
+    <package name="courseType" extends="common" namespace="/course">
+
+        <global-results>
+            <result name="error">/pages/error.jsp</result>
+        </global-results>
+
         <!--添加课程-->
-        <action name="add"
+        <action name="addCourse"
                 class="courseTypeAction"
-                method="add">
+                method="addCourse">
             <result name="success" type="redirectAction">findAll</result>
             <result name="error">/pages/coursetype/addOrEditCourse.jsp</result>
             <result name="input">/pages/coursetype/addOrEditCourse.jsp</result>
@@ -243,24 +221,13 @@
                 class="courseTypeAction"
                 method="findAll">
             <result name="success">/pages/coursetype/listCourse.jsp</result>
+            <result name="input">/pages/login.jsp</result>
         </action>
 
     </package>
 
     <!--班级-->
-    <package name="classes" extends="struts-default" namespace="/classes">
-
-        <interceptors>
-            <interceptor name="teacherCheck" class="com.lanou.util.TeacherCheck">
-                <param name="includeMethods">upload,add</param>
-            </interceptor>
-            <interceptor-stack name="myInterceptorStack">
-                <interceptor-ref name="teacherCheck"/>
-                <interceptor-ref name="defaultStack"/>
-            </interceptor-stack>
-        </interceptors>
-
-        <default-interceptor-ref name="myInterceptorStack"/>
+    <package name="classes" extends="common" namespace="/classes">
 
         <!--查询所有班级-->
         <action name="findAll"
@@ -270,9 +237,9 @@
         </action>
 
         <!--添加和修改班级-->
-        <action name="add"
+        <action name="addClass"
                 class="classesAction"
-                method="add">
+                method="addClass">
             <result name="success" type="redirectAction">findAll</result>
             <result name="error">/pages/classesm/addOrEditClass.jsp</result>
             <result name="input">/pages/classesm/addOrEditClass.jsp</result>

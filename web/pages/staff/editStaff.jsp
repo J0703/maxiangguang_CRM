@@ -8,7 +8,7 @@
     <title>无标题文档</title>
     <link href="${pageContext.request.contextPath}/css/sys.css" type="text/css" rel="stylesheet"/>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/Calendar.js"></script>
-    <script src="../../jquery-3.2.1.js"></script>
+    <script src="../../js/jquery-3.2.1.js"></script>
 </head>
 
 <body class="emp_body">
@@ -47,7 +47,7 @@
             <td>登录名：</td>
             <td><input type="text" name="loginName" value="${param.loginName}"/></td>
             <td>密码：</td>
-            <td><input type="password" name="loginPwd" value="${param.loginPwd}"/></td>
+            <td><input type="password" name="loginPwd" value="" placeholder="请重新输入密码" autocomplete="off"/></td>
         </tr>
         <tr>
             <td>姓名：</td>

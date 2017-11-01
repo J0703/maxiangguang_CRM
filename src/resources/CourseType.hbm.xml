@@ -2,7 +2,7 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="com.lanou.domain.CourseType">
+    <class name="com.lanou.eduction.domain.CourseType">
         <id name="courseId" length="32">
             <generator class="uuid"/>
         </id>

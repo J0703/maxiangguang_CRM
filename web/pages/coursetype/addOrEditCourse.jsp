@@ -33,7 +33,7 @@
 
 <span style="color: red"><s:actionerror/></span>
 
-<form  action="${pageContext.request.contextPath}/course/add.action" method="post">
+<form  action="${pageContext.request.contextPath}/course/addCourse.action" method="post">
 
 	<input type="hidden" name="courseId" value="${param.courseId}">
 

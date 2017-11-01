@@ -29,9 +29,11 @@
                 <img src="${pageContext.request.contextPath}/images/button/gaojichaxun.gif"/>
             </a>
             <%--编辑前：添加类别 --%>
-            <a href="${pageContext.request.contextPath}/pages/coursetype/addOrEditCourse.jsp">
-                <img src="${pageContext.request.contextPath}/images/button/tianjia.gif"/>
-            </a>
+            <c:if test="${applicationScope.staff.post.department.depId == '2c9090cb5f585a97015f585b1cdd0001'}">
+                <a href="${pageContext.request.contextPath}/pages/coursetype/addOrEditCourse.jsp">
+                    <img src="${pageContext.request.contextPath}/images/button/tianjia.gif"/>
+                </a>
+            </c:if>
         </td>
         <td width="3%" align="right"><img src="${pageContext.request.contextPath}/images/tright.gif"/></td>
     </tr>
@@ -44,21 +46,21 @@
     <table width="88%" border="0" class="emp_table" style="width:80%;">
         <tr>
             <td width="10%">课程类别：</td>
-            <td><input type="text" name="courseName" size="30" value=""/></td>
+            <td><input type="text" name="courseName" size="30" value="" placeholder="例如: JavaEE" autocomplete="off"/></td>
         </tr>
         <tr>
             <td>课程简介：</td>
-            <td><input type="text" name="remark" size="30" value=""/></td>
+            <td><input type="text" name="remark" size="30" value="" placeholder="例如: ssh" autocomplete="off"/></td>
         </tr>
         <tr>
             <td>总学时：</td>
-            <td><input type="text" name="totalStart" size="12" value=""/> 至 <input type="text" name="totalEnd" size="12"
-                                                                                   value=""/></td>
+            <td><input type="text" name="totalStart" size="12" value="" placeholder="> 0 的数" autocomplete="off"/> 至 <input type="text" name="totalEnd" size="12"
+                                                                                   value="" placeholder="> 0 的数" autocomplete="off"/></td>
         </tr>
         <tr>
             <td>课程费用：</td>
-            <td><input type="text" name="costStart" size="12" value=""/> 至 <input type="text" name="costEnd"
-                                                                                  size="12" value=""/></td>
+            <td><input type="text" name="costStart" size="12" value="" placeholder="> 0 的数" autocomplete="off"/> 至 <input type="text" name="costEnd"
+                                                                                  size="12" value="" placeholder="> 0 的数" autocomplete="off"/></td>
         </tr>
     </table>
 </form>
@@ -88,9 +90,17 @@
             <td align="center">${course.total}</td>
             <td align="center">${course.courseCost}</td>
             <td width="11%" align="center">
-                <a href="${pageContext.request.contextPath}/pages/coursetype/addOrEditCourse.jsp?courseId=${course.courseId}
+                <c:choose>
+                    <c:when test="${applicationScope.staff.post.department.depId == '2c9090cb5f585a97015f585b1cdd0001'}">
+                        <a href="${pageContext.request.contextPath}/pages/coursetype/addOrEditCourse.jsp?courseId=${course.courseId}
                 &courseName=${course.courseName}&remark=${course.remark}&total=${course.total}&courseCost=${course.courseCost}"><img
-                        src="${pageContext.request.contextPath}/images/button/modify.gif" class="img"/></a>
+                                src="${pageContext.request.contextPath}/images/button/modify.gif" class="img"/></a>
+                    </c:when>
+                    <c:otherwise>
+                        <img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img"/>
+                    </c:otherwise>
+                </c:choose>
+
             </td>
         </tr>
     </s:iterator>

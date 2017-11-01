@@ -26,9 +26,12 @@
 
         <td width="57%" align="right">
             <%--添加职务 --%>
-            <a href="${pageContext.request.contextPath}/pages/post/addOrEditPost.jsp">
-                <img src="${pageContext.request.contextPath}/images/button/tianjia.gif"/>
-            </a>
+            <c:if test="${applicationScope.staff.post.department.depId == '2c9090cb5f585a97015f585af7990000'}">
+                <a href="${pageContext.request.contextPath}/pages/post/addOrEditPost.jsp">
+                    <img src="${pageContext.request.contextPath}/images/button/tianjia.gif"/>
+                </a>
+            </c:if>
+
 
         </td>
         <td width="3%" align="right"><img src="${pageContext.request.contextPath}/images/tright.gif"/></td>
@@ -52,8 +55,15 @@
             <td align="center">${p.department.depName}</td>
             <td align="center">${p.postName}</td>
             <td width="7%" align="center">
-                <a href="${pageContext.request.contextPath}/pages/post/addOrEditPost.jsp?postId=${p.postId}&postName=${p.postName}"><img
-                        src="${pageContext.request.contextPath}/images/button/modify.gif" class="img"/></a>
+                <c:choose>
+                    <c:when test="${applicationScope.staff.post.department.depId == '2c9090cb5f585a97015f585af7990000' || applicationScope.staff.staffId == s.staffId}">
+                        <a href="${pageContext.request.contextPath}/pages/post/addOrEditPost.jsp?postId=${p.postId}&postName=${p.postName}"><img
+                                src="${pageContext.request.contextPath}/images/button/modify.gif" class="img"/></a>
+                    </c:when>
+                    <c:otherwise>
+                        <img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img"/>
+                    </c:otherwise>
+                </c:choose>
             </td>
         </tr>
     </s:iterator>

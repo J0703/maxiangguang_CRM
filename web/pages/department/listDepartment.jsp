@@ -26,9 +26,12 @@
 
         <td width="57%" align="right">
             <%--添加部门 --%>
-            <a href="${pageContext.request.contextPath}/pages/department/addOrEditDepartment.jsp">
-                <img src="${pageContext.request.contextPath}/images/button/tianjia.gif"/>
-            </a>
+            <c:if test="${applicationScope.staff.post.department.depId == '2c9090cb5f585a97015f585af7990000'}">
+                <a href="${pageContext.request.contextPath}/pages/department/addOrEditDepartment.jsp">
+                    <img src="${pageContext.request.contextPath}/images/button/tianjia.gif"/>
+                </a>
+            </c:if>
+
 
         </td>
         <td width="3%" align="right"><img src="${pageContext.request.contextPath}/images/tright.gif"/></td>
@@ -50,8 +53,17 @@
         <tr class="tabtd1">
             <td align="center">${depart.depName}</td>
             <td width="7%" align="center">
-                <a href="${pageContext.request.contextPath}/pages/department/addOrEditDepartment.jsp?depName=${depart.depName}&depId=${depart.depId}"><img
-                        src="${pageContext.request.contextPath}/images/button/modify.gif" class="img"/></a>
+
+                <c:choose>
+                    <c:when test="${applicationScope.staff.post.department.depId == '2c9090cb5f585a97015f585af7990000' || applicationScope.staff.staffId == s.staffId}">
+                        <a href="${pageContext.request.contextPath}/pages/department/addOrEditDepartment.jsp?depName=${depart.depName}&depId=${depart.depId}"><img
+                                src="${pageContext.request.contextPath}/images/button/modify.gif" class="img"/></a>
+                    </c:when>
+                    <c:otherwise>
+                        <img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img"/>
+                    </c:otherwise>
+                </c:choose>
+
             </td>
         </tr>
     </s:iterator>

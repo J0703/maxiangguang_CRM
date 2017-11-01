@@ -2,7 +2,7 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="com.lanou.domain.Classes">
+    <class name="com.lanou.eduction.domain.Classes">
         <id name="classId">
             <generator class="uuid"/>
         </id>
@@ -20,7 +20,7 @@
         <property name="uploadFilename"/>
 
         <many-to-one name="courseType"
-                     class="com.lanou.domain.CourseType"
+                     class="com.lanou.eduction.domain.CourseType"
                      column="courseId"
                      lazy="false"
                      cascade="all"/>

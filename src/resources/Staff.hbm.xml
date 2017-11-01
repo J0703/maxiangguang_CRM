@@ -2,7 +2,7 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="com.lanou.domain.Staff" table="crm_staff">
+    <class name="com.lanou.hr.domain.Staff" table="crm_staff">
         <id name="staffId">
             <generator class="uuid"/>
         </id>
@@ -14,7 +14,7 @@
         <property name="onDutyDate"/>
 
         <many-to-one name="post"
-                     class="com.lanou.domain.Post"
+                     class="com.lanou.hr.domain.Post"
                      lazy="false"
                      column="postId"
                      cascade="all"/>

@@ -70,64 +70,64 @@
     <aop:config>
         <!--配置切入点(通常指向业务层)-->
         <aop:pointcut id="pointcut"
-                      expression="execution(* com.lanou.service.*.*(..))"/>
+                      expression="execution(* com.lanou.common.service.*.*(..))"/>
         <!--配置通知-->
         <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
     </aop:config>
 
     <!--dao层-->
-    <bean class="com.lanou.dao.impl.DepartmentDaoImpl"
+    <bean class="com.lanou.hr.dao.impl.DepartmentDaoImpl"
           id="departmentDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean class="com.lanou.dao.impl.StaffDaoImpl"
+    <bean class="com.lanou.hr.dao.impl.StaffDaoImpl"
           id="staffDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean class="com.lanou.dao.impl.PostDaoImpl"
+    <bean class="com.lanou.hr.dao.impl.PostDaoImpl"
           id="postDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean class="com.lanou.dao.impl.CourseTypeDaoImpl"
+    <bean class="com.lanou.eduction.dao.impl.CourseTypeDaoImpl"
           id="courseTypeDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean class="com.lanou.dao.impl.ClassesDaoImpl"
+    <bean class="com.lanou.eduction.dao.impl.ClassesDaoImpl"
           id="classesDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
 
     <!--service层-->
-    <bean class="com.lanou.service.impl.DepartmentServiceImpl"
+    <bean class="com.lanou.hr.service.impl.DepartmentServiceImpl"
           id="departmentService">
         <property name="departmentDao" ref="departmentDao"/>
     </bean>
 
-    <bean class="com.lanou.service.impl.StaffServiceImpl"
+    <bean class="com.lanou.hr.service.impl.StaffServiceImpl"
           id="staffService">
         <property name="staffDao" ref="staffDao"/>
         <property name="postDao" ref="postDao"/>
         <property name="baseDao" ref="staffDao"/>
     </bean>
 
-    <bean class="com.lanou.service.impl.PostServiceImpl"
+    <bean class="com.lanou.hr.service.impl.PostServiceImpl"
           id="postService">
         <property name="postDao" ref="postDao"/>
         <property name="baseDao" ref="postDao"/>
     </bean>
 
-    <bean class="com.lanou.service.impl.CourseTypeServiceImpl"
+    <bean class="com.lanou.eduction.service.impl.CourseTypeServiceImpl"
           id="courseTypeService">
         <property name="courseTypeDao" ref="courseTypeDao"/>
         <property name="baseDao" ref="courseTypeDao"/>
     </bean>
 
-    <bean class="com.lanou.service.impl.ClassesServiceImpl"
+    <bean class="com.lanou.eduction.service.impl.ClassesServiceImpl"
           id="classesService">
         <property name="classesDao" ref="classesDao"/>
         <property name="baseDao" ref="classesDao"/>

@@ -24,9 +24,12 @@
             <td width="42%" align="center">&nbsp;</td>
             <td width="36%" align="right">
                 <%--添加班级  /html/classesm/addClass.jsp--%>
-                <a href="${pageContext.request.contextPath}/classes/showCourse.action">
-                    <img src="${pageContext.request.contextPath}/images/button/tianjia.gif" class="img"/>
-                </a>
+                <c:if test="${applicationScope.staff.post.department.depId == '2c9090cb5f585a97015f585b1cdd0001'}">
+                    <a href="${pageContext.request.contextPath}/classes/showCourse.action">
+                        <img src="${pageContext.request.contextPath}/images/button/tianjia.gif" class="img"/>
+                    </a>
+                </c:if>
+
                 <%--高级查询
                 <a href="queryClass.html"><img src="${pageContext.request.contextPath}/images/button/gaojichaxun.gif" class="img"/></a>
                 --%>
@@ -76,16 +79,38 @@
             <td align="center">${clazz.upgradeCount}</td>
             <td align="center">${clazz.changeCount}</td>
             <td align="center">
-                <a href="${pageContext.request.contextPath}/classes/showCourse.action?classId=${clazz.classId}&className=${clazz.className}&courseName=${clazz.courseType.courseName}&beginTime=${clazz.beginTime}&endTime=${clazz.endTime}&status=${clazz.status}&totalCount=${clazz.totalCount}&courseId=${clazz.courseType.courseId}&upgradeCount=${clazz.upgradeCount}&changCount=${clazz.changeCount}">
-                    <img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img"/></a>
+                <c:choose>
+                    <c:when test="${applicationScope.staff.post.department.depId == '2c9090cb5f585a97015f585b1cdd0001'}">
+                        <a href="${pageContext.request.contextPath}/classes/showCourse.action?classId=${clazz.classId}&className=${clazz.className}&courseName=${clazz.courseType.courseName}&beginTime=${clazz.beginTime}&endTime=${clazz.endTime}&status=${clazz.status}&totalCount=${clazz.totalCount}&courseId=${clazz.courseType.courseId}&upgradeCount=${clazz.upgradeCount}&changCount=${clazz.changeCount}">
+                            <img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img"/></a>
+                    </c:when>
+                    <c:otherwise>
+                        <img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img"/>
+                    </c:otherwise>
+                </c:choose>
             </td>
             <td align="center">
                 <a href="${pageContext.request.contextPath}/classes/showClasses.action?classId=${clazz.classId}"><img
                         src="${pageContext.request.contextPath}/images/button/modify.gif" class="img"/></a>
             </td>
-            <td align="center" title="上次上传时间：2015-04-02">
-                <a href="${pageContext.request.contextPath}/classes/preparedUpload.action?classId=${clazz.classId}">上传</a>
-                <a href="${pageContext.request.contextPath}/classes/download.action">下载</a> <br/>
+            <td align="center" title="上次上传时间：${clazz.uploadTime}">
+                <c:choose>
+                    <c:when test="${applicationScope.staff.post.department.depId == '2c9090cb5f585a97015f585b1cdd0001'}">
+                        <a href="${pageContext.request.contextPath}/classes/preparedUpload.action?classId=${clazz.classId}">上传</a>
+                    </c:when>
+                    <c:otherwise>
+                        <span>上传</span>
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${clazz.uploadPath != null && clazz.uploadFilename != null}">
+                        <a href="${pageContext.request.contextPath}/classes/download.action?classId=${clazz.classId}">下载</a>
+                    </c:when>
+                    <c:otherwise>
+                        <span>未上传</span>
+                    </c:otherwise>
+                </c:choose>
+                <br/>
             </td>
         </tr>
     </s:iterator>

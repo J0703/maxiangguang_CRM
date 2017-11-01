@@ -35,6 +35,8 @@
     </tr>
 </table>
 
+<s:actionerror/>
+
 <form action="${pageContext.request.contextPath}/classes/add.action?classId=${param.classId}" method="post">
 
     <table width="88%" border="0" class="emp_table" style="width:80%;">

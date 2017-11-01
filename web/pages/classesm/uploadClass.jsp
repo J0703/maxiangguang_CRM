@@ -56,7 +56,7 @@
 	  </tr>
 	  <tr>
 	    <td colspan="3">
-	    	<input type="file" name="schedule" value="" />
+	    	<input type="file" name="photo" value="" />
 	    </td>
 	  </tr>
 	</table>

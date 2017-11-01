@@ -311,6 +311,7 @@
                 <param name="fileUpload.allowedExtensions">.png,.jpg,.jpeg</param>
             </interceptor-ref>
             <result name="input">/pages/error.jsp</result>
+            <result name="success" type="redirectAction">findAll</result>
         </action>
 
         <!--下载-->
